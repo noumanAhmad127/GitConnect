@@ -9,6 +9,8 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
+log/*
+/tmp/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
@@ -29,6 +31,11 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
+/test/*
+test/*
 /app/assets/builds/*
 !/app/assets/builds/.keep
+/.env
+.env
+log/
+
