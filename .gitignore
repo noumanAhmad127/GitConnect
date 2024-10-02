@@ -11,7 +11,7 @@
 /log/*
 log/*
 /tmp/*
-tmp/*
+/tmp/*
 !/log/.keep
 !/tmp/.keep
 
@@ -37,3 +37,5 @@ test/*
 !/app/assets/builds/.keep
 /.env
 .env
+log/
+
