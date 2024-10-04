@@ -11,7 +11,13 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :profile_pic %>
+    <%= form.label :profile_pic, "Profile Picture" %>
+    <% if @profile.profile_pic.attached? %>
+      <div>
+        <strong>Current Profile Picture:</strong><br>
+        <%= image_tag @profile.profile_pic, alt: "Profile Picture", style: "max-width: 200px; max-height: 200px;" %>
+      </div>
+    <% end %>
     <%= form.file_field :profile_pic %>
   </div>
   <div class="field">

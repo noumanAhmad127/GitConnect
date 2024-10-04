@@ -5,8 +5,8 @@
   <p><strong>City:</strong> <%= @profile.city || 'Not provided' %></p>
   <p><strong>Headline:</strong> <%= @profile.headline || 'Not provided' %></p>
   <p><strong>Profile Picture:</strong></p>
-  <% if @profile.profile_pic.present? %>
-    <%= image_tag @profile.profile_pic.url %>
+  <% if @profile.profile_pic.attached? %>
+    <%= image_tag(@profile.profile_pic, style:"width: 200px") %>
   <% else %>
     <p>No profile picture uploaded.</p>
   <% end %>
