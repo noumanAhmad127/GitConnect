@@ -1,35 +1,49 @@
-<div class="flex flex-col gap-2">
-  <h1>Hello <%=@profile.name%></h1>
-  <p><strong>Email:</strong> <%= current_user.email || 'Not provided' %></p>
-  <p><strong>Contact Info:</strong> <%= @profile.contact_info || 'Not provided' %></p>
-  <p><strong>City:</strong> <%= @profile.city || 'Not provided' %></p>
-  <p><strong>Headline:</strong> <%= @profile.headline || 'Not provided' %></p>
-  <p><strong>Profile Picture:</strong></p>
-  <% if @profile.profile_pic.attached? %>
-    <%= image_tag(@profile.profile_pic, style:"width: 200px") %>
-  <% else %>
-    <p>No profile picture uploaded.</p>
-  <% end %>
-  <h2>Social Media Links</h2>
-  <ul>
+<div class="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800">Hello <%= @profile.name %></h1>
+  <p class="text-gray-600">
+    <strong>Email:</strong> <%= current_user.email || 'Not provided' %>
+  </p>
+  <p class="text-gray-600">
+    <strong>Contact Info:</strong> <%= @profile.contact_info || 'Not provided' %>
+  </p>
+  <p class="text-gray-600">
+    <strong>City:</strong> <%= @profile.city || 'Not provided' %>
+  </p>
+  <p class="text-gray-600">
+    <strong>Headline:</strong> <%= @profile.headline || 'Not provided' %>
+  </p>
+  <div class="mb-4">
+    <strong>Profile Picture:</strong>
+    <div class="mt-2">
+      <% if @profile.profile_pic.attached? %>
+        <%= image_tag(@profile.profile_pic, style: "width: 200px", class: "rounded-md shadow-lg") %>
+      <% else %>
+        <p class="text-gray-500">No profile picture uploaded.</p>
+      <% end %>
+    </div>
+  </div>
+  <h2 class="text-xl font-semibold text-gray-700 mt-4">Social Media Links</h2>
+  <ul class="list-disc ml-6 mt-2">
     <% @profile.social_media_links.each do |link| %>
-      <li>
+      <li class="text-gray-600">
         <% if link.present? %>
-          <strong>Link:</strong> <%= link_to link, link, target: "_blank" %>
+          <strong>Link:</strong> <%= link_to link, link, target: "_blank", class: "text-blue-500 hover:underline" %>
         <% else %>
           <strong>Link:</strong> Not provided
         <% end %>
       </li>
     <% end %>
   </ul>
-  <h2>Skill Sets</h2>
-  <% @profile.skill_sets.each do |skill| %>
-    <p><%= skill %></p>
-  <% end %>
-  <h2>Education</h2>
-  <ul>
+  <h2 class="text-xl font-semibold text-gray-700 mt-4">Skill Sets</h2>
+  <div class="mt-2">
+    <% @profile.skill_sets.each do |skill| %>
+      <p class="text-gray-600">• <%= skill %></p>
+    <% end %>
+  </div>
+  <h2 class="text-xl font-semibold text-gray-700 mt-4">Education</h2>
+  <ul class="list-disc ml-6 mt-2">
     <% @profile.education.each do |edu| %>
-      <li>
+      <li class="text-gray-600 mb-2">
         <% if edu["degree"].present? %>
           <strong>Degree:</strong> <%= edu["degree"] %>
         <% else %>
@@ -48,10 +62,10 @@
       </li>
     <% end %>
   </ul>
-  <h2>Work Experience</h2>
-  <ul>
+  <h2 class="text-xl font-semibold text-gray-700 mt-4">Work Experience</h2>
+  <ul class="list-disc ml-6 mt-2">
     <% @profile.work_experience.each do |exp| %>
-      <li>
+      <li class="text-gray-600 mb-2">
         <% if exp["position"].present? %>
           <strong>Position:</strong> <%= exp["position"] %>
         <% else %>
@@ -80,5 +94,7 @@
       </li>
     <% end %>
   </ul>
-  <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
+  <div class="mt-4">
+    <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "text-blue-600 hover:underline" %>
+  </div>
 </div>

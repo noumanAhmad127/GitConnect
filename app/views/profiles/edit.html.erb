@@ -74,9 +74,9 @@
         <%= form.label "work_experience[][responsibilities]", "Responsibilities" %>
         <%= form.text_field "work_experience[][responsibilities]", value: exp["responsibilities"], placeholder: "e.g. Web Developer" %>
         <%= form.label "work_experience[][start_date]", "Start Date" %>
-        <%= form.text_field "work_experience[][start_date]", value: exp["start_date"], placeholder: "" %>
+        <%= form.date_select "work_experience[][start_date]", value: exp["start_date"] %>
         <%= form.label "work_experience[][end_date]", "End Date" %>
-        <%= form.text_field "work_experience[][end_date]", value: exp["end_date"], placeholder: "" %>
+        <%= form.date_select "work_experience[][end_date]", value: exp["end_date"]%>
       </div>
     <% end %>
   </div>
