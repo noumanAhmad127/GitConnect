@@ -1,11 +1,48 @@
 <h1>Edit Your Profile</h1>
-<%= render 'form', profile: @profile %>
 <%= form_with(model: @profile, local: true) do |form| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+      <ul>
+        <% @profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="field">
-    <%= form.label :social_media_links %>
-    <%= form.text_field :social_media_links, placeholder: 'Link 1', name: "profile[social_media_links][]", value: @profile.social_media_links[0] %>
-    <%= form.text_field :social_media_links, placeholder: 'Link 2', name: "profile[social_media_links][]", value: @profile.social_media_links[1] %>
-    <%= form.text_field :social_media_links, placeholder: 'Link 3', name: "profile[social_media_links][]", value: @profile.social_media_links[2] %>
+    <%= form.label :profile_pic %>
+    <%= form.file_field :profile_pic %>
+  </div>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email, optional: true %>
+  </div>
+  <div class="field">
+    <%= form.label :contact_info %>
+    <%= form.text_field :contact_info %>
+  </div>
+  <div class="field">
+    <%= form.label :headline %>
+    <%= form.text_field :headline %>
+  </div>
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+  <div>
+    <%= form.label :skill_sets, "Skill Sets (comma-separated)" %>
+    <%= form.text_area :skill_sets, value: @profile.skill_sets.join(', ') %>
+  </div>
+  <div class="field">
+    <%= form.label :social_media_links, "Social Media Links" %>
+    <% @profile.social_media_links.each_with_index do |link, index| %>
+      <%= form.text_field :social_media_links, name: "profile[social_media_links][]", value: link, placeholder: "Enter Link #{index + 1}" %>
+    <% end %>
   </div>
   <div class="field">
     <%= form.label :education, "Education" %>
@@ -28,8 +65,12 @@
         <%= form.text_field "work_experience[][position]", value: exp["position"], placeholder: "e.g. Developer" %>
         <%= form.label "work_experience[][company]", "Company" %>
         <%= form.text_field "work_experience[][company]", value: exp["company"], placeholder: "e.g. Company A" %>
-        <%= form.label "work_experience[][duration]", "Duration" %>
-        <%= form.text_field "work_experience[][duration]", value: exp["duration"], placeholder: "e.g. 2020-2022" %>
+        <%= form.label "work_experience[][responsibilities]", "Responsibilities" %>
+        <%= form.text_field "work_experience[][responsibilities]", value: exp["responsibilities"], placeholder: "e.g. Web Developer" %>
+        <%= form.label "work_experience[][start_date]", "Start Date" %>
+        <%= form.text_field "work_experience[][start_date]", value: exp["start_date"], placeholder: "" %>
+        <%= form.label "work_experience[][end_date]", "End Date" %>
+        <%= form.text_field "work_experience[][end_date]", value: exp["end_date"], placeholder: "" %>
       </div>
     <% end %>
   </div>

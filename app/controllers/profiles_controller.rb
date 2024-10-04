@@ -35,8 +35,8 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:name, :email, :contact_info, :profile_pic, :headline, :city,
-                                    social_media_links: %i[link1 link2 link3], education: %i[degree institution graduation_date], work_experience: %i[company position start_date end_date])
+    params.require(:profile).permit(:name, :email, :contact_info, :profile_pic, :headline, :city,:skill_sets,
+                                    social_media_links: [], education: %i[degree institution graduation_date], work_experience: %i[company position responsibilities start_date end_date])
   end
 
   def set_profile

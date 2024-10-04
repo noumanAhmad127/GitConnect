@@ -1,36 +1,3 @@
-<%= form_with(model: @profile, local: true) do |form| %>
-  <% if @profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-      <ul>
-        <% @profile.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true %>
-  </div>
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email, optional: true %>
-  </div>
-  <div class="field">
-    <%= form.label :contact_info %>
-    <%= form.text_field :contact_info %>
-  </div>
-  <div class="field">
-    <%= form.label :profile_pic %>
-    <%= form.file_field :profile_pic %>
-  </div>
-  <div class="field">
-    <%= form.label :headline %>
-    <%= form.text_field :headline %>
-  </div>
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
+<%= form_with(model: profile, local: true) do |form| %>
+  
 <%end%>
