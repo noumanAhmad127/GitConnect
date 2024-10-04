@@ -1,9 +1,13 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  before_action :set_profile, only: %i[edit update destroy]
+  before_action :authenticate_user!, only: %i[edit update]
+  before_action :set_profile, only: %i[show edit update]
+
+  def index
+    @profiles = Profile.all
+  end
 
   def show
-    @profile = current_user.profile
+    @profile = Profile.find(params[:id])
     return unless @profile.nil?
 
     redirect_to new_profile_path, alert: 'Please create your profile Frist'
@@ -22,7 +26,11 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    return unless @profile.user != current_user
+
+    redirect_to profile_path(@profile), alert: 'You can only edit your own profile.'
+  end
 
   def update
     if @profile.update(profile_params)
@@ -35,12 +43,12 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:name, :email, :contact_info, :profile_pic, :headline, :city,:skill_sets,
+    params.require(:profile).permit(:name, :email, :contact_info, :profile_pic, :headline, :city, :skill_sets,
                                     social_media_links: [], education: %i[degree institution graduation_date], work_experience: %i[company position responsibilities start_date end_date])
   end
 
   def set_profile
-    @profile = current_user.profile
+    @profile = Profile.find(params[:id])
     redirect_to new_profile_path, alert: 'Profile not found. Please create a profile.' unless @profile
   end
 end

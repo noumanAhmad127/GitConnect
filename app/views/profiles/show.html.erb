@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-md">
   <h1 class="text-2xl font-bold text-gray-800">Hello <%= @profile.name %></h1>
   <p class="text-gray-600">
-    <strong>Email:</strong> <%= current_user.email || 'Not provided' %>
+    <strong>Email:</strong> <%= @profile.email || 'Not provided' %>
   </p>
   <p class="text-gray-600">
     <strong>Contact Info:</strong> <%= @profile.contact_info || 'Not provided' %>
@@ -94,7 +94,9 @@
       </li>
     <% end %>
   </ul>
-  <div class="mt-4">
-    <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "text-blue-600 hover:underline" %>
-  </div>
+  <% if @profile.user == current_user %>
+    <div class="mt-4">
+      <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "text-blue-600 hover:underline" %>
+    </div>
+  <% end %>
 </div>

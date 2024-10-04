@@ -1,0 +1,84 @@
+<div class="flex flex-col w-full">
+  <h1 class="text-4xl font-bold mb-8 text-center">All Registered Developers</h1>
+  <div class="flex justify-start">
+    <% @profiles.each do |profile| %>
+      <div class="card flex flex-col md:flex-row p-5 bg-white bg-opacity-50 rounded-lg shadow-lg max-w-lg  my-4 mx-2 relative overflow-hidden">
+        <div class="img">
+          <% if profile.profile_pic.attached? %>
+            <%= image_tag profile.profile_pic, class: "w-24 h-24 rounded-full shadow-lg" %>
+          <% else %>
+            <img class="w-24 h-24 rounded-full shadow-lg" src="default-avatar.png" alt="Profile Image">
+          <% end %>
+        </div>
+        <div class="infos ml-6 mt-6 md:mt-0">
+          <div class="name mb-4">
+            <h2 class="text-xl font-bold"><%= profile.name %></h2>
+            <span class="flex flex-row gap-2">
+              <% if profile.skill_sets.any? %>
+                <% profile.skill_sets.each do |skill| %>
+                  <p class="text-sm text-gray-700"><%= skill %></p>
+                <% end %>
+              <% else %>
+                <p class="text-sm text-gray-500 italic">No skill defined</p>
+              <% end %>
+            </span>
+          </div>
+          <p class="text-sm mb-4">
+            <%if profile.headline.present?%>
+              <%= profile.headline %>
+            <% else %>
+              Headline Not Present
+            <%end%>
+          </p>
+          <ul class="stats flex mb-4">
+            <li class="mr-6">
+              <h3 class="text-lg font-semibold">15K</h3>
+              <h4 class="text-xs text-gray-600">Views</h4>
+            </li>
+            <li class="mr-6">
+              <h3 class="text-lg font-semibold">82</h3>
+              <h4 class="text-xs text-gray-600">Projects</h4>
+            </li>
+            <li>
+              <h3 class="text-lg font-semibold">1.3M</h3>
+              <h4 class="text-xs text-gray-600">Followers</h4>
+            </li>
+          </ul>
+          <div class="links flex">
+            <button class="follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white">Follow</button>
+            <button class="view bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black"><%=link_to "View profile" , profile%></button>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;700&display=swap');
+
+  body {
+      @apply flex items-center justify-center bg-blue-200 min-h-screen font-poppins;
+  }
+
+  .card::before {
+      content: '';
+      @apply absolute w-full h-full border border-white rounded-lg top-[-0.7rem] left-[-0.7rem];
+  }
+
+  .card::after {
+      content: '';
+      @apply absolute h-60 w-60 bg-blue-500 bg-opacity-70 top-[-8rem] right-[-8rem] shadow-[2rem_6rem_0_-3rem_white];
+  }
+
+  @media (max-width: 450px) {
+      .card {
+          @apply flex-col;
+      }
+      .infos {
+          @apply ml-0 mt-6;
+      }
+      .links button {
+          @apply min-w-[100px];
+      }
+  }
+</style>
