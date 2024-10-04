@@ -1,2 +1,55 @@
 <h1>Create Your Profile</h1>
 <%= render 'form', profile: @profile %>
+<%= form_with(model: @profile, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :social_media_links %>
+    <%= form.text_field :social_media_links, placeholder: 'Link 1', value: @profile.social_media_links[0] %>
+    <%= form.text_field :social_media_links, placeholder: 'Link 2', value: @profile.social_media_links[1] %>
+    <%= form.text_field :social_media_links, placeholder: 'Link 3', value: @profile.social_media_links[2] %>
+  </div>
+  <div class="field">
+    <%= form.label :education, "Education" %>
+    <div class="education-entry">
+      <%= form.label :degree, "Degree" %>
+      <%= form.text_field :education, name: "profile[education][][degree]", placeholder: "Enter degree" %>
+      <%= form.label :institution, "Institution" %>
+      <%= form.text_field :education, name: "profile[education][][institution]", placeholder: "Enter institution" %>
+      <%= form.label :graduation_date, "Graduation Date" %>
+      <%= form.date_select :graduation_date, name: "profile[education][][graduation_date]" %>
+    </div>
+    <div class="education-entry">
+      <%= form.label :degree, "Degree" %>
+      <%= form.text_field :education, name: "profile[education][][degree]", placeholder: "Enter degree" %>
+      <%= form.label :institution, "Institution" %>
+      <%= form.text_field :education, name: "profile[education][][institution]", placeholder: "Enter institution" %>
+      <%= form.label :graduation_date, "Graduation Date" %>
+      <%= form.date_select :graduation_date, name: "profile[education][][graduation_date]" %>
+    </div>
+  </div>
+  <div class="field">
+    <%= form.label :work_experience, "Work Experience" %>
+    <div class="work-entry">
+      <%= form.label :position, "Position" %>
+      <%= form.text_field :work_experience, name: "profile[work_experience][][position]", placeholder: "Enter position" %>
+      <%= form.label :company, "Company" %>
+      <%= form.text_field :work_experience, name: "profile[work_experience][][company]", placeholder: "Enter company" %>
+      <%= form.label :start_date, "Starting Date" %>
+      <%= form.date_select :start_date, name: "profile[work_experience][][start_date]", placeholder: "Enter Starting date" %>
+      <%= form.label :end_date, "Ending Date" %>
+      <%= form.date_select :end_date, name: "profile[work_experience][][end_date]", placeholder: "Enter Ending date" %>
+    </div>
+    <div class="work-entry">
+      <%= form.label :position, "Position" %>
+      <%= form.text_field :work_experience, name: "profile[work_experience][][position]", placeholder: "Enter position" %>
+      <%= form.label :company, "Company" %>
+      <%= form.text_field :work_experience, name: "profile[work_experience][][company]", placeholder: "Enter company" %>
+      <%= form.label :start_date, "Starting Date" %>
+      <%= form.date_select :start_date, name: "profile[work_experience][][start_date]", placeholder: "Enter Starting date" %>
+      <%= form.label :end_date, "Ending Date" %>
+      <%= form.date_select :end_date, name: "profile[work_experience][][end_date]", placeholder: "Enter Ending date" %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

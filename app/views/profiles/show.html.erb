@@ -1,67 +1,69 @@
-<h1>Hello <%=@profile.name%></h1>
-<p><strong>Email:</strong> <%= current_user.email || 'Not provided' %></p>
-<p><strong>Contact Info:</strong> <%= @profile.contact_info || 'Not provided' %></p>
-<p><strong>City:</strong> <%= @profile.city || 'Not provided' %></p>
-<p><strong>Headline:</strong> <%= @profile.headline || 'Not provided' %></p>
-<p><strong>Profile Picture:</strong></p>
-<% if @profile.profile_pic.present? %>
-  <%= image_tag @profile.profile_pic.url %>
-<% else %>
-  <p>No profile picture uploaded.</p>
-<% end %>
-<h2>Social Media Links</h2>
-<ul>
-  <% @profile.social_media_links.each do |link| %>
-    <li><%= link.present? ? link : 'Not provided' %></li>
+<div class="flex flex-col gap-2">
+  <h1>Hello <%=@profile.name%></h1>
+  <p><strong>Email:</strong> <%= current_user.email || 'Not provided' %></p>
+  <p><strong>Contact Info:</strong> <%= @profile.contact_info || 'Not provided' %></p>
+  <p><strong>City:</strong> <%= @profile.city || 'Not provided' %></p>
+  <p><strong>Headline:</strong> <%= @profile.headline || 'Not provided' %></p>
+  <p><strong>Profile Picture:</strong></p>
+  <% if @profile.profile_pic.present? %>
+    <%= image_tag @profile.profile_pic.url %>
+  <% else %>
+    <p>No profile picture uploaded.</p>
   <% end %>
-</ul>
-<h2>Education</h2>
-<ul>
-  <% @profile.education.each do |edu| %>
-    <li>
-      <% if edu["degree"].present? %>
-        <strong>Degree:</strong> <%= edu["degree"] %>
-      <% else %>
-        <strong>Degree:</strong> Not provided
-      <% end %>
-      <% if edu["institution"].present? %>
-        <strong>Institution:</strong> <%= edu["institution"] %>
-      <% else %>
-        <strong>Institution:</strong> Not provided
-      <% end %>
-      <% if edu["graduation_date"].present? %>
-        <strong>Graduation Date:</strong> <%= edu["graduation_date"] %>
-      <% else %>
-        <strong>Graduation Date:</strong> Not provided
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-<h2>Work Experience</h2>
-<ul>
-  <% @profile.work_experience.each do |exp| %>
-    <li>
-      <% if exp["position"].present? %>
-        <strong>Position:</strong> <%= exp["position"] %>
-      <% else %>
-        <strong>Position:</strong> Not provided
-      <% end %>
-      <% if exp["company"].present? %>
-        <strong>Company:</strong> <%= exp["company"] %>
-      <% else %>
-        <strong>Company:</strong> Not provided
-      <% end %>
-      <% if exp["start_date"].present? %>
-        <strong>Start Date:</strong> <%= exp["start_date"] %>
-      <% else %>
-        <strong>Start Date:</strong> Not provided
-      <% end %>
-      <% if exp["end_date"].present? %>
-        <strong>End Date:</strong> <%= exp["end_date"] %>
-      <% else %>
-        <strong>End Date:</strong> Not provided
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-<%= link_to 'Edit Profile', edit_profile_path(@profile) %>
+  <h2>Social Media Links</h2>
+  <ul>
+    <% @profile.social_media_links.each do |link| %>
+      <li><%= link.present? ? link : 'Not provided' %></li>
+    <% end %>
+  </ul>
+  <h2>Education</h2>
+  <ul>
+    <% @profile.education.each do |edu| %>
+      <li>
+        <% if edu["degree"].present? %>
+          <strong>Degree:</strong> <%= edu["degree"] %>
+        <% else %>
+          <strong>Degree:</strong> Not provided
+        <% end %>
+        <% if edu["institution"].present? %>
+          <strong>Institution:</strong> <%= edu["institution"] %>
+        <% else %>
+          <strong>Institution:</strong> Not provided
+        <% end %>
+        <% if edu["graduation_date"].present? %>
+          <strong>Graduation Date:</strong> <%= edu["graduation_date"] %>
+        <% else %>
+          <strong>Graduation Date:</strong> Not provided
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <h2>Work Experience</h2>
+  <ul>
+    <% @profile.work_experience.each do |exp| %>
+      <li>
+        <% if exp["position"].present? %>
+          <strong>Position:</strong> <%= exp["position"] %>
+        <% else %>
+          <strong>Position:</strong> Not provided
+        <% end %>
+        <% if exp["company"].present? %>
+          <strong>Company:</strong> <%= exp["company"] %>
+        <% else %>
+          <strong>Company:</strong> Not provided
+        <% end %>
+        <% if exp["start_date"].present? %>
+          <strong>Start Date:</strong> <%= exp["start_date"] %>
+        <% else %>
+          <strong>Start Date:</strong> Not provided
+        <% end %>
+        <% if exp["end_date"].present? %>
+          <strong>End Date:</strong> <%= exp["end_date"] %>
+        <% else %>
+          <strong>End Date:</strong> Not provided
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
+</div>
