@@ -42,14 +42,14 @@
   </div>
   <div class="field">
     <%= form.label :education, "Education" %>
-    <% @profile.education.each_with_index do |edu, index| %>
+    <% @profile.education.each do |edu| %>
       <div class="education-entry">
-        <%= form.label "education[#{index}][degree]", "Degree" %>
-        <%= form.text_field "education[#{index}][degree]", value: edu["degree"], placeholder: "Enter degree" %>
-        <%= form.label "education[#{index}][institution]", "Institution" %>
-        <%= form.text_field "education[#{index}][institution]", value: edu["institution"], placeholder: "Enter institution" %>
-        <%= form.label "education[#{index}][graduation_date]", "Graduation Date" %>
-        <%= form.date_select "education[#{index}][graduation_date]", selected: edu["graduation_date"] %>
+        <%= form.label "education[][degree]", "Degree" %>
+        <%= form.text_field "education[][degree]", value: edu["degree"], placeholder: "Enter degree" %>
+        <%= form.label "education[][institution]", "Institution" %>
+        <%= form.text_field "education[][institution]", value: edu["institution"], placeholder: "Enter institution" %>
+        <%= form.label "education[][graduation_date]", "Graduation Date" %>
+        <%= form.date_select "education[][graduation_date]", selected: edu["graduation_date"] %>
       </div>
     <% end %>
   </div>
@@ -57,12 +57,12 @@
     <%= form.label :work_experience, "Work Experience" %>
     <% @profile.work_experience.each_with_index do |exp, index| %>
       <div class="work-entry">
-        <%= form.label "work_experience[#{index}][position]", "Position" %>
-        <%= form.text_field "work_experience[#{index}][position]", value: exp["position"], placeholder: "e.g. Developer" %>
-        <%= form.label "work_experience[#{index}][company]", "Company" %>
-        <%= form.text_field "work_experience[#{index}][company]", value: exp["company"], placeholder: "e.g. Company A" %>
-        <%= form.label "work_experience[#{index}][duration]", "Duration" %>
-        <%= form.text_field "work_experience[#{index}][duration]", value: exp["duration"], placeholder: "e.g. 2020-2022" %>
+        <%= form.label "work_experience[][position]", "Position" %>
+        <%= form.text_field "work_experience[][position]", value: exp["position"], placeholder: "e.g. Developer" %>
+        <%= form.label "work_experience[][company]", "Company" %>
+        <%= form.text_field "work_experience[][company]", value: exp["company"], placeholder: "e.g. Company A" %>
+        <%= form.label "work_experience[][duration]", "Duration" %>
+        <%= form.text_field "work_experience[][duration]", value: exp["duration"], placeholder: "e.g. 2020-2022" %>
       </div>
     <% end %>
   </div>

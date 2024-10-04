@@ -7,11 +7,6 @@ class ProfilesController < ApplicationController
     return unless @profile.nil?
 
     redirect_to new_profile_path, alert: 'Please create your profile Frist'
-
-    respond_to do |format|
-      format.html { @profile }
-      format.json { render json: json_format(@profile) }
-    end
   end
 
   def new
@@ -27,12 +22,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def edit
-    respond_to do |format|
-      format.html { @profile }
-      format.json { render json: json_format(@profile) }
-    end
-  end
+  def edit; end
 
   def update
     if @profile.update(profile_params)
