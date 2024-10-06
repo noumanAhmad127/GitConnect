@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  before_action :authenticate_user!, only: %i[create destroy]
   before_action :set_profile
 
   def create
@@ -12,7 +13,7 @@ class FollowsController < ApplicationController
   end
 
   def destroy
-    @follow = current_user.profile.followed_relationships.find_id(followed_id: @profile.id)
+    @follow = current_user.profile.follower_relationships.find_by(followed_id: @profile.id)
 
     if @follow
       @follow.destroy
