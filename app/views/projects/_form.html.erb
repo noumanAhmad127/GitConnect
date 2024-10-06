@@ -1,0 +1,21 @@
+<%= form_with model: [@profile, @project], local: true do |form| %>
+  <div class="field">
+    <%= form.label :title, class: "font-semibold" %>
+    <%= form.text_field :title, class: "form-input rounded-md shadow-sm" %>
+  </div>
+  <div class="field mt-4">
+    <%= form.label :description, class: "font-semibold" %>
+    <%= form.text_area :description, class: "form-textarea rounded-md shadow-sm" %>
+  </div>
+  <div class="field mt-4">
+    <%= form.label :demo_link, class: "font-semibold" %>
+    <%= form.text_field :demo_link, placeholder: "Enter Demo Link", class: "form-input rounded-md shadow-sm" %>
+  </div>
+  <div class="field mt-4">
+    <%= form.label :images, "Project Screenshots", class: "font-semibold" %>
+    <%= form.file_field :images, multiple: true, class: "form-input rounded-md shadow-sm" %>
+  </div>
+  <div class="actions mt-6">
+    <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+<% end %>

@@ -96,6 +96,26 @@
   </ul>
   <div>
     <h2 class="text-xl font-semibold text-gray-700 mt-4">Projects</h2>
+    <h2>Projects</h2>
+    <%= link_to 'Add New Project', new_profile_project_path(@profile), class: "btn btn-primary" %>
+    <ul>
+      <% @profile.projects.each do |project| %>
+        <li>
+          <strong>Title:</strong> <%= project.title %><br>
+          <strong>Description:</strong> <%= project.description %><br>
+          <strong>Demo Link:</strong> <%= link_to project.demo_link, project.demo_link, target: "_blank" %><br>
+          <% if project.images.attached? %>
+            <div class="screenshots">
+              <% project.images.each do |image| %>
+                <%= image_tag image %>
+              <% end %>
+            </div>
+          <% end %>
+          <%= link_to 'Edit', edit_profile_project_path(@profile, project), class: "btn btn-secondary" %>
+          <%= link_to 'Delete', profile_project_path(@profile, project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
   <% if @profile.user == current_user %>
     <div class="mt-4">
