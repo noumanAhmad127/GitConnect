@@ -49,9 +49,9 @@
               <% if current_user.profile.followed_profiles.include?(profile) %>
                 <%= link_to 'Followed', profile_follow_path(profile), data:{
         turbo_method: :delete
-      }, class: "unfollow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+      }, class: " bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
               <% else %>
-                <%= link_to 'Follow', profile_follow_path(profile), method: :post, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+                <%= link_to 'Follow', profile_follow_path(profile), method: :post, class: " bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
               <% end %>
             <% else %>
               <%= link_to 'Log in to Follow', new_user_session_path, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>

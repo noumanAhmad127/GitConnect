@@ -1,143 +1,111 @@
-<div class="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-md">
-  <h1 class="text-2xl font-bold text-gray-800">Hello <%= @profile.name %></h1>
-  <div>
-    <h2>Followers: <%= @profile.followers.count %></h2>
-    <h2>Following: <%= @profile.followed_profiles.count %></h2>
-  </div>
-  <div>
-    <% if current_user.profile.followed_profiles.include?(@profile) %>
-      <%= link_to 'Unfollow', profile_follow_path(@profile), data:{
-        turbo_method: :delete,
-      }, 
-      class: "btn btn-danger" %>
-    <% else %>
-      <%= button_to 'Follow', profile_follow_path(@profile), method: :post, class: "btn btn-primary" %>
-    <% end %>
-  </div>
-  <p class="text-gray-600">
-    <strong>Email:</strong> <%= @profile.email || 'Not provided' %>
-  </p>
-  <p class="text-gray-600">
-    <strong>Contact Info:</strong> <%= @profile.contact_info || 'Not provided' %>
-  </p>
-  <p class="text-gray-600">
-    <strong>City:</strong> <%= @profile.city || 'Not provided' %>
-  </p>
-  <p class="text-gray-600">
-    <strong>Headline:</strong> <%= @profile.headline || 'Not provided' %>
-  </p>
-  <div class="mb-4">
-    <strong>Profile Picture:</strong>
-    <div class="mt-2">
+<div class="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+  <!-- Profile Image, Followers, Following, Posts, and Follow/Unfollow -->
+  <div class="flex items-center justify-between px-10">
+    <div class="flex space-x-8">
+      <div class="text-center">
+        <span class="block text-lg font-semibold"><%= @profile.followers.count %></span>
+        <span class="text-gray-600">Followers</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-lg font-semibold"><%= @profile.followed_profiles.count %></span>
+        <span class="text-gray-600">Following</span>
+      </div>
+      <div class="text-center">
+        <!-- You can add post count here if needed -->
+        <span class="block text-lg font-semibold">45</span>
+        <span class="text-gray-600">Posts</span>
+      </div>
+    </div>
+    <div class="mr-36 text-center relative">
       <% if @profile.profile_pic.attached? %>
-        <%= image_tag(@profile.profile_pic, style: "width: 200px", class: "rounded-md shadow-lg") %>
+        <%= image_tag(@profile.profile_pic, class: "rounded-full w-48 h-48 mx-auto mb-4", alt: "Profile Image") %>
       <% else %>
         <p class="text-gray-500">No profile picture uploaded.</p>
       <% end %>
     </div>
-  </div>
-  <h2 class="text-xl font-semibold text-gray-700 mt-4">Social Media Links</h2>
-  <ul class="list-disc ml-6 mt-2">
-    <% @profile.social_media_links.each do |link| %>
-      <li class="text-gray-600">
-        <% if link.present? %>
-          <strong>Link:</strong> <%= link_to link, link, target: "_blank", class: "text-blue-500 hover:underline" %>
+    <div>
+      <div>
+        <% if current_user.profile.followed_profiles.include?(@profile) %>
+          <%= link_to 'Unfollow', profile_follow_path(@profile), data: { turbo_method: :delete }, class: " bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black" %>
         <% else %>
-          <strong>Link:</strong> Not provided
+          <%= button_to 'Follow', profile_follow_path(@profile), method: :post, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
-  <h2 class="text-xl font-semibold text-gray-700 mt-4">Skill Sets</h2>
-  <div class="mt-2">
+      </div>
+    </div>
+  </div>
+  <!-- Separator -->
+  <div class="border-t my-6"></div>
+  <!-- Name, Email, and Contact Info -->
+  <div class="text-center">
+    <h2 class="text-2xl font-bold mb-1"><%= @profile.name %></h2>
+    <p class="text-gray-600">
+      <%= @profile.email || 'Not provided' %> <span class="mx-2">·</span>
+      <%= @profile.contact_info || 'Not provided' %>
+    </p>
+  </div>
+  <!-- Skill Sets -->
+  <div class="mt-4 text-center">
     <% @profile.skill_sets.each do |skill| %>
-      <p class="text-gray-600">• <%= skill %></p>
+      <span class="text-gray-700"><%= skill %></span><%= @profile.skill_sets.last != skill ? ',' : '' %>
     <% end %>
   </div>
-  <h2 class="text-xl font-semibold text-gray-700 mt-4">Education</h2>
-  <ul class="list-disc ml-6 mt-2">
-    <% @profile.education.each do |edu| %>
-      <li class="text-gray-600 mb-2">
-        <% if edu["degree"].present? %>
-          <strong>Degree:</strong> <%= edu["degree"] %>
-        <% else %>
-          <strong>Degree:</strong> Not provided
-        <% end %>
-        <% if edu["institution"].present? %>
-          <strong>Institution:</strong> <%= edu["institution"] %>
-        <% else %>
-          <strong>Institution:</strong> Not provided
-        <% end %>
-        <% if edu["graduation_date"].present? %>
-          <strong>Graduation Date:</strong> <%= edu["graduation_date"] %>
-        <% else %>
-          <strong>Graduation Date:</strong> Not provided
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-  <h2 class="text-xl font-semibold text-gray-700 mt-4">Work Experience</h2>
-  <ul class="list-disc ml-6 mt-2">
+  <!-- About Section -->
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold mb-2">About</h3>
+    <p class="text-gray-700"><%= @profile.headline || 'Not provided' %></p>
+  </div>
+  <!-- Experience Section -->
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold mb-2">Experience</h3>
     <% @profile.work_experience.each do |exp| %>
-      <li class="text-gray-600 mb-2">
-        <% if exp["position"].present? %>
-          <strong>Position:</strong> <%= exp["position"] %>
-        <% else %>
-          <strong>Position:</strong> Not provided
-        <% end %>
-        <% if exp["company"].present? %>
-          <strong>Company:</strong> <%= exp["company"] %>
-        <% else %>
-          <strong>Company:</strong> Not provided
-        <% end %>
-        <% if exp["responsibilities"].present? %>
-          <strong>Responsibilities:</strong> <%= exp["responsibilities"] %>
-        <% else %>
-          <strong>Responsibilities:</strong> Not provided
-        <% end %>
-        <% if exp["start_date"].present? %>
-          <strong>Start Date:</strong> <%= exp["start_date"] %>
-        <% else %>
-          <strong>Start Date:</strong> Not provided
-        <% end %>
-        <% if exp["end_date"].present? %>
-          <strong>End Date:</strong> <%= exp["end_date"] %>
-        <% else %>
-          <strong>End Date:</strong> Not provided
-        <% end %>
-      </li>
+      <div class="p-4 bg-gray-100 rounded-lg mb-4">
+        <h4 class="text-lg font-bold"><%= exp['position'] || 'Not provided' %></h4>
+        <p class="text-xs text-gray-500"><%= exp['start_date'] || 'Not provided' %> - <%= exp['end_date'] || 'Present' %></p>
+        <p class="text-sm text-gray-800 font-semibold mt-2"><%= exp['company'] || 'Not provided' %></p>
+        <p class="mt-1 text-gray-700"><%= exp['responsibilities'] || 'Not provided' %></p>
+      </div>
     <% end %>
-  </ul>
-  <div>
-    <h2 class="text-xl font-semibold text-gray-700 mt-4">Projects</h2>
-    <h2>Projects</h2>
-    <% if @profile.user == current_user%>
-      <%= link_to 'Add New Project', new_profile_project_path(@profile), class: "btn btn-primary" %>
-    <% end%>
+  </div>
+  <!-- Education Section -->
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold mb-2">Education</h3>
+    <% @profile.education.each do |edu| %>
+      <div class="p-4 bg-gray-100 rounded-lg mb-4">
+        <h4 class="text-lg font-bold"><%= edu['institution'] || 'Not provided' %></h4>
+        <p class="text-sm text-gray-600"><%= edu['graduation_date'] || 'Not provided' %></p>
+        <p class="mt-1 text-gray-700"><%= edu['degree'] || 'Not provided' %></p>
+      </div>
+    <% end %>
+  </div>
+  <!-- Projects Section -->
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold mb-2">Projects</h3>
+    <% if @profile.user == current_user %>
+      <%= link_to 'Add New Project', new_profile_project_path(@profile), class: "bg-blue-500 text-white border border-blue rounded-md px-4 py-2  transition duration-200 hover:bg-white hover:text-blue-400" %>
+    <% end %>
     <% if @profile.projects.any? %>
-      <ul>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <% @profile.projects.each do |project| %>
-          <li>
-            <strong>Title:</strong> <%= link_to  project.title, profile_project_path(@profile, project) %><br>
-            <strong>Description:</strong> <%= project.description %><br>
-            <% if @profile.user == current_user%>
-              <%= link_to 'Edit', edit_profile_project_path(@profile, project), class: "btn btn-secondary" %>
-              <%= link_to 'Delete', profile_project_path(@profile, project), data:{
-            turbo_method: :delete,
-            turbo_confirm: "Are you sure"
-          },
-          class: "btn btn-danger" %>
+          <div class="p-4 bg-gray-100 rounded-lg">
+            <h4 class="text-lg font-semibold"><%= project.title %></h4>
+            <p class="text-gray-700"><%= project.description %></p>
+            <% if @profile.user == current_user %>
+              <div class="mt-4">
+                <%= link_to 'Edit', edit_profile_project_path(@profile, project), class: "bg-black text-white border border-black rounded-md px-4 py-2 transition duration-200 hover:bg-white hover:text-black" %>
+                <%= link_to 'Delete', profile_project_path(@profile, project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-red-500 text-white border border-red-500  rounded-md px-4 py-2  transition duration-200 hover:bg-white hover:text-red-500" %>
+              </div>
             <% end %>
-          </li>
+          </div>
         <% end %>
-      </ul>
+      </div>
     <% else %>
       <p class="text-gray-500">No projects added yet.</p>
     <% end %>
   </div>
+  <!-- Edit Profile Button -->
   <% if @profile.user == current_user %>
-    <div class="mt-4">
-      <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "text-blue-600 hover:underline" %>
+    <div class="mt-8 text-center">
+      <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "bg-white text-black border border-black rounded-md px-4 py-2 transition duration-200 hover:bg-black hover:text-white" %>
     </div>
   <% end %>
 </div>
