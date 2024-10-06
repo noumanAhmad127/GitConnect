@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   }
   resources :profiles do
     resources :projects
+    resource :follow, only: [:create, :destroy]
   end
 
   root to: 'profiles#index'
