@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :set_profile
-  before_action :set_project, only: %i[edit update destroy]
+  before_action :set_project, only: %i[show edit update destroy]
+
+  def show; end
 
   def new
     @project = @profile.projects.new
@@ -18,7 +20,7 @@ class ProjectsController < ApplicationController
   def edit; end
 
   def update
-    if @project.create(project_params)
+    if @project.update(project_params)
       redirect_to profile_path(@profile), notice: 'Project Updated'
     else
       render :edit, unprocessable_entity
@@ -28,7 +30,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
 
-    redirect_to profile_path(@profile), notice: 'Project Deleted'
+    redirect_to profile_path(@profile), status: :see_other, notice: 'Project Deleted'
   end
 
   private
