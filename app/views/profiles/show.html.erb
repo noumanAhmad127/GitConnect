@@ -4,11 +4,11 @@
     <div class="flex space-x-8">
       <div class="text-center">
         <span class="block text-lg font-semibold"><%= @profile.followers.count %></span>
-        <span class="text-gray-600">Followers</span>
+        <span class="text-gray-600"><%= link_to 'Followers', followers_profile_path(@profile) %></span>
       </div>
       <div class="text-center">
         <span class="block text-lg font-semibold"><%= @profile.followed_profiles.count %></span>
-        <span class="text-gray-600">Following</span>
+        <span class="text-gray-600"><%= link_to 'Followers', following_profile_path(@profile) %></span>
       </div>
       <div class="text-center">
         <!-- You can add post count here if needed -->

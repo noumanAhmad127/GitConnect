@@ -40,6 +40,16 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def followers
+    @profile = Profile.find(params[:id])
+    @followers = @profile.followers
+  end
+
+  def followers
+    @profile = Profile.find(params[:id])
+    @following = @profile.followed_profiles
+  end
+
   private
 
   def profile_params

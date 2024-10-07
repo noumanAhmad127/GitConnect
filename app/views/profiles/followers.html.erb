@@ -1,0 +1,12 @@
+<h1 class="block text-2xl font-bold">Followers of <%= @profile.name %></h1>
+<% if @followers.any? %>
+  <ul class="list-disc ml-6 mt-2">
+    <% @followers.each do |follower| %>
+      <li class="text-gray-600">
+        <%= link_to follower.name, profile_path(follower) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="block text-gray-500">No followers found.</p>
+<% end %>

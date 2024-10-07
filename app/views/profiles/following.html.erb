@@ -1,0 +1,10 @@
+
+<h1><%= @profile.name %> is following:</h1>
+<ul>
+  <% @following.each do |followed_profile| %>
+    <li>
+      <%= link_to followed_profile.name, profile_path(followed_profile) %> <!-- Adjust as needed -->
+    </li>
+  <% end %>
+</ul>
+<%= link_to 'Back to Profile', profile_path(@profile), class: "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" %>

@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   }
   resources :profiles do
     resources :projects
-    resource :follow, only: [:create, :destroy]
+    resource :follow, only: %i[create destroy]
+    member do
+      get 'followers'
+      get 'following'
+    end
   end
 
   root to: 'profiles#index'
