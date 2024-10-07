@@ -37,9 +37,7 @@
       </div>
     </div>
   </div>
-  <!-- Separator -->
   <div class="border-t my-6"></div>
-  <!-- Name, Email, and Contact Info -->
   <div class="text-center">
     <h2 class="text-2xl font-bold mb-1"><%= @profile.name %></h2>
     <p class="text-gray-600">
@@ -47,18 +45,15 @@
       <%= @profile.contact_info || 'Not provided' %>
     </p>
   </div>
-  <!-- Skill Sets -->
   <div class="mt-4 text-center">
     <% @profile.skill_sets.each do |skill| %>
       <span class="text-gray-700"><%= skill %></span><%= @profile.skill_sets.last != skill ? ',' : '' %>
     <% end %>
   </div>
-  <!-- About Section -->
   <div class="mt-8">
     <h3 class="text-lg font-semibold mb-2">About</h3>
     <p class="text-gray-700"><%= @profile.headline || 'Not provided' %></p>
   </div>
-  <!-- Experience Section -->
   <div class="mt-8">
     <h3 class="text-lg font-semibold mb-2">Experience</h3>
     <% @profile.work_experience.each do |exp| %>
@@ -70,7 +65,6 @@
       </div>
     <% end %>
   </div>
-  <!-- Education Section -->
   <div class="mt-8">
     <h3 class="text-lg font-semibold mb-2">Education</h3>
     <% @profile.education.each do |edu| %>
@@ -81,7 +75,6 @@
       </div>
     <% end %>
   </div>
-  <!-- Projects Section -->
   <div class="mt-8">
     <h3 class="text-lg font-semibold mb-2">Projects</h3>
     <% if @profile.user == current_user %>
@@ -106,7 +99,6 @@
       <p class="text-gray-500">No projects added yet.</p>
     <% end %>
   </div>
-  <!-- Edit Profile Button -->
   <% if @profile.user == current_user %>
     <div class="mt-8 text-center">
       <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "bg-white text-black border border-black rounded-md px-4 py-2 transition duration-200 hover:bg-black hover:text-white" %>
