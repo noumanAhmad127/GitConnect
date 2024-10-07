@@ -23,7 +23,6 @@
                 </ul>
               </div>
             <% end %>
-            <!-- Profile Picture Section -->
             <div class="flex flex-col items-center gap-4 space-y-5 sm:flex-row sm:space-y-0", style="flex-direction: column;">
               <% if @profile.profile_pic.attached? %>
                 <div>
@@ -36,18 +35,15 @@
                 <%= form.file_field :profile_pic, class: 'hidden' %>
               </label>
             </div>
-            <!-- Name Section -->
             <div class="flex flex-col mt-8 sm:mt-14 text-[#202142]">
               <div class="mb-2">
                 <%= form.label :name, "Your Full Name", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <%= form.text_field :name, class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 w-full", placeholder: "Your name", required: true %>
               </div>
-              <!-- Email Field -->
               <div class="mb-2">
                 <%= form.label :email, "Your Email", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <%= form.email_field :email, class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 w-full", placeholder: "your.email@mail.com" %>
               </div>
-              <!-- Contact Info Field -->
               <div class="mb-2">
                 <%= form.label :contact_info, "Contact Info", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <%= form.text_field :contact_info, class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 w-full", placeholder: "Your contact info" %>
@@ -56,24 +52,20 @@
                 <%= form.label :city, "City", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <%= form.text_field :city, class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 w-full", placeholder: "Your city" %>
               </div>
-              <!-- Headline Field -->
               <div class="mb-2">
                 <%= form.label :headline, "Headline", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <%= form.text_field :headline, class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 w-full", placeholder: "Your headline" %>
               </div>
-              <!-- Skill Sets -->
               <div class="mb-2">
                 <%= form.label :skill_sets, "Skill Sets (comma-separated)", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <%= form.text_area :skill_sets, value: @profile.skill_sets.join(', '), class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 w-full", placeholder: "Your skills" %>
               </div>
-              <!-- Social Media Links -->
               <div class="mb-2">
                 <%= form.label :social_media_links, "Social Media Links", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <% @profile.social_media_links.each_with_index do |link, index| %>
                   <%= form.text_field :social_media_links, name: "profile[social_media_links][]", value: link, placeholder: "Enter Link #{index + 1}", class: "bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg p-2.5 my-1 w-full" %>
                 <% end %>
               </div>
-              <!-- Education -->
               <div class="mb-2">
                 <%= form.label :education, "Education", class: "block mb-2 text-sm font-medium text-indigo-900" %>
                 <% @profile.education.each do |edu| %>

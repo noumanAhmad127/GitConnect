@@ -1,12 +1,39 @@
-<h1 class="block text-2xl font-bold">Followers of <%= @profile.name %></h1>
-<% if @followers.any? %>
-  <ul class="list-disc ml-6 mt-2">
-    <% @followers.each do |follower| %>
-      <li class="text-gray-600">
-        <%= link_to follower.name, profile_path(follower) %>
-      </li>
+<div class='flex flex-col items-center justify-center bg-slate-200 mx-auto'>
+  <h1 class="my-2 font-medium text-3xl sm:text-4xl font-black">
+    <%= @profile.name %>'s Followers
+  </h1>
+  <div class="user-list w-full max-w-lg mx-auto bg-white rounded-xl shadow-xl flex flex-col py-4">
+    <% if @followers.any? %>
+      <% @followers.each do |follower| %>
+        <!-- User row -->
+        <div class="user-row flex flex-col items-center justify-between cursor-pointer p-4 duration-300 sm:flex-row sm:py-4 sm:px-8 border border-black rounded-md hover:bg-[#f6f8f9]">
+          <div class="user flex items-center text-center gap-5 flex-col sm:flex-row sm:text-left">
+            <div class="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
+              <img class="object-cover w-20 h-20 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
+                   src="<%= @profile.profile_pic.attached? ? url_for(@profile.profile_pic) : 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60' %>"
+                   alt="Profile Picture">
+            </div>
+            <div class="user-body flex flex-col mb-4 gap-4 sm:mb-0">
+              <%= link_to follower.name, profile_path, class: "title font-medium no-underline" %>
+            </div>
+          </div>
+          <!-- Button content -->
+          <div class="user-option mx-auto sm:ml-auto sm:mr-0">
+            <% if user_signed_in? %>
+              <% if current_user.profile.followed_profiles.include?(@profile) %>
+                <%= link_to 'Unfollow', profile_follow_path(@profile), data: { turbo_method: :delete }, class: " bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black" %>
+              <% else %>
+                <%= button_to 'Follow', profile_follow_path(@profile), method: :post, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+              <% end %>
+            <% else %>
+              <%= link_to 'Log in to Follow', new_user_session_path, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="block text-gray-500 text-lg mt-4">No followers found.</p>
     <% end %>
-  </ul>
-<% else %>
-  <p class="block text-gray-500">No followers found.</p>
-<% end %>
+  </div>
+  <%= link_to 'Back to Profile', profile_path(@profile), class: "mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200" %>
+</div>
