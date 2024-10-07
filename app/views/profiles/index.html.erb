@@ -7,6 +7,21 @@
     <%= link_to  "Signin", new_user_session_path %>
   <% end %>
   <h1 class="text-4xl font-bold mb-8 text-center">All Registered Developers</h1>
+  <%= form_with url: profiles_path, method: :get, local: true do %>
+    <div class="field">
+      <%= label_tag :skill_sets, "Skill Sets (comma-separated)" %>
+      <%= text_field_tag :skill_sets, params[:skill_sets] %>
+    </div>
+    <div class="field">
+      <%= label_tag :city, "City" %>
+      <%= text_field_tag :city, params[:city] %>
+    </div>
+    <div class="field">
+      <%= label_tag :years_of_experience, "Minimum Years of Experience" %>
+      <%= number_field_tag :years_of_experience, params[:years_of_experience] %>
+    </div>
+    <%= submit_tag "Filter Profiles" %>
+  <% end %>
   <div class="flex justify-start">
     <% @profiles.each do |profile| %>
       <div class="card flex flex-col md:flex-row p-5 bg-white bg-opacity-50 rounded-lg shadow-lg max-w-lg  my-4 mx-2 relative overflow-hidden">

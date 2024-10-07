@@ -4,6 +4,7 @@ class ProfilesController < ApplicationController
 
   def index
     @profiles = Profile.all
+    @profiles = Profile.filter(params)
   end
 
   def show
@@ -54,7 +55,8 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:name, :email, :contact_info, :profile_pic, :headline, :city, :skill_sets,
-                                    social_media_links: [], education: %i[degree institution graduation_date], work_experience: %i[company position responsibilities start_date end_date])
+                                    social_media_links: [], education: %i[degree institution graduation_date],
+                                    work_experience: %i[company position responsibilities years_of_experience])
   end
 
   def set_profile
