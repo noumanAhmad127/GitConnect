@@ -95,32 +95,3 @@
     <%end%>
   </div>
 </div>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;700&display=swap');
-
-  body {
-      @apply flex items-center justify-center bg-blue-200 min-h-screen font-poppins;
-  }
-
-  .card::before {
-      content: '';
-      @apply absolute w-full h-full border border-white rounded-lg top-[-0.7rem] left-[-0.7rem];
-  }
-
-  .card::after {
-      content: '';
-      @apply absolute h-60 w-60 bg-blue-500 bg-opacity-70 top-[-8rem] right-[-8rem] shadow-[2rem_6rem_0_-3rem_white];
-  }
-
-  @media (max-width: 450px) {
-      .card {
-          @apply flex-col;
-      }
-      .infos {
-          @apply ml-0 mt-6;
-      }
-      .links button {
-          @apply min-w-[100px];
-      }
-  }
-</style>
