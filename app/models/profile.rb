@@ -15,25 +15,14 @@ class Profile < ApplicationRecord
     super(value.split(',').map(&:strip))
   end
 
-  def self.filter(params)
-    profiles = Profile.all
-
-    # Filter by skill sets
-    if params[:skill_sets].present?
-      skill_set_array = params[:skill_sets].split(',').map(&:strip)
-      skill_set_array.each do |skill|
-        profiles = profiles.where('skill_sets @> ?', [skill].to_json)
-      end
-    end
-
-    # Filter by city
-    profiles = profiles.where(city: params[:city]) if params[:city].present?
-
-    # Filter by years of experience
-    if params[:years_of_experience].present?
-      profiles = profiles.where('years_of_experience >= ?', params[:years_of_experience])
-    end
-
-    profiles
-  end
+  scope :with_skill_set, lambda { |skill_sets|
+    skill_array = skill_sets.split(',').map(&:strip).map(&:downcase) # Split and downcase skills
+    skill_array.map do |skill|
+      where('lower(skill_sets::text) LIKE ?', "%#{skill}%")
+    end.reduce(&:or) # Combine conditions using OR
+  }
+  scope :with_location, ->(location) { where('lower(city) = ?', location.downcase) }
+  scope :with_years_of_experience, lambda { |years_of_experience|
+    where('work_experience::text LIKE ?', "%\"years_of_experience\":\"#{years_of_experience}\"%")
+  }
 end

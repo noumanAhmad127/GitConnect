@@ -4,7 +4,14 @@ class ProfilesController < ApplicationController
 
   def index
     @profiles = Profile.all
-    @profiles = Profile.filter(params)
+
+    @profiles = @profiles.with_skill_set(params[:skill_set]) if params[:skill_set].present?
+    @profiles = @profiles.with_location(params[:location]) if params[:location].present?
+    return unless params[:years_of_experience].present?
+
+    return unless params[:years_of_experience].present?
+
+    @profiles = @profiles.with_years_of_experience(params[:years_of_experience].to_i)
   end
 
   def show
