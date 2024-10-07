@@ -25,10 +25,14 @@
     </div>
     <div>
       <div>
-        <% if current_user.profile.followed_profiles.include?(@profile) %>
-          <%= link_to 'Unfollow', profile_follow_path(@profile), data: { turbo_method: :delete }, class: " bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black" %>
+        <% if user_signed_in? %>
+          <% if current_user.profile.followed_profiles.include?(@profile) %>
+            <%= link_to 'Unfollow', profile_follow_path(@profile), data: { turbo_method: :delete }, class: " bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black" %>
+          <% else %>
+            <%= button_to 'Follow', profile_follow_path(@profile), method: :post, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+          <% end %>
         <% else %>
-          <%= button_to 'Follow', profile_follow_path(@profile), method: :post, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+          <%= link_to 'Log in to Follow', new_user_session_path, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
         <% end %>
       </div>
     </div>
