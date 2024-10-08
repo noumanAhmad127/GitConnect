@@ -1,5 +1,5 @@
 <h1><%= @post.title %></h1>
-<p><%= @post.content %></p>
+<p><%= markdown(@post.content) %></p>
 <p><strong>Tags:</strong>
   <%= @post.tags.map(&:name).join(", ") %>
 </p>
