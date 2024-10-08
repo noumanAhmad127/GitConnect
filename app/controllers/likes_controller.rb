@@ -2,24 +2,22 @@ class LikesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @like = current_user.profile.likes.new(like_params)
+    @likeable = find_likeable
+    @likeable.likes.create(profile: current_user.profile)
 
-    if @like.save
-      redirect_back(fallback_location: root_path, notice: 'Liked the post!')
-    else
-      redirect_back(fallback_location: root_path, alert: 'Failed to like the post.')
-    end
+    redirect_back fallback_location: root_path
   end
 
   def destroy
-    @like = current_user.profile.likes.find(params[:id])
-    @like.destroy
-    redirect_back(fallback_location: root_path, notice: 'Unliked the post.')
+    @likeable = find_likeable
+    @likeable.likes.find_by(profile: current_user.profile)&.destroy
+
+    redirect_back fallback_location: root_path
   end
 
   private
 
-  def like_params
-    params.require(:like).permit(:likeable_id, :likeable_type)
+  def find_likeable
+    params[:post_id] ? Post.find(params[:post_id]) : Comment.find(params[:comment_id])
   end
 end

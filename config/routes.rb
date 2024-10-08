@@ -10,12 +10,12 @@ Rails.application.routes.draw do
       get 'following'
     end
 
-    resources :posts, only: %i[new create edit update destroy] do
-      resources :likes, only: %i[create destroy]
-    end
+    resources :posts, only: %i[new create edit update destroy]
   end
   # resources :likes, only: %i[create destroy]
-  resources :posts, only: %i[index show]
+  resources :posts, only: %i[index show] do
+    resources :likes, only: %i[create destroy]
+  end
 
   get 'tags/:tag', to: 'posts#index', as: :tag
 
