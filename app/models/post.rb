@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  has_many :likes, as: :likeable, dependent: :destroy
   belongs_to :profile
 
   has_many :post_tags

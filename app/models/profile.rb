@@ -11,6 +11,8 @@ class Profile < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
+  has_many :likes, dependent: :destory
+
   has_one_attached :profile_pic
 
   def skill_sets=(value)

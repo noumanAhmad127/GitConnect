@@ -10,7 +10,10 @@ Rails.application.routes.draw do
       get 'following'
     end
 
-    resources :posts, only: %i[new create edit update destroy]
+    resources :posts, only: %i[new create edit update destroy] do
+      resource :like, only: %i[create destroy]
+    end
+    resource :like, only: %i[create destroy]
   end
   resources :posts, only: %i[index show]
   root to: 'profiles#index'
