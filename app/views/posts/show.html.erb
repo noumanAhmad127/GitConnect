@@ -4,7 +4,7 @@
 <% if user_signed_in? %>
   <% like = current_user.profile.likes.find_by(likeable: @post) %>
   <% if like.nil? %>
-    <%= button_to "Like", profile_post_likes_path(current_user.profile, @post), method: :post, class: "btn btn-success" %>
+    <%= link_to "Like", profile_post_likes_path(current_user.profile, @post, like: { likeable_id: @post.id, likeable_type: "Post" }), data: { turbo_method: :post }, class: "btn btn-success" %>
   <% else %>
     <%= button_to "Unlike", profile_post_like_path(current_user.profile, @post, like), method: :delete, class: "btn btn-danger" %>
   <% end %>

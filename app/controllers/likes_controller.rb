@@ -2,37 +2,24 @@ class LikesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    puts 'Like action triggered'
-    puts params.inspect
-
-    @like = current_user.profile.likes.build(like_params)
-    puts @like.inspect
+    @like = current_user.profile.likes.new(like_params)
 
     if @like.save
-      redirect_back(fallback_location: root_path, notice: 'Post liked!')
+      redirect_back(fallback_location: root_path, notice: 'Liked the post!')
     else
-      flash[:alert] = @like.errors.full_messages.join(', ')
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: root_path, alert: 'Failed to like the post.')
     end
   end
 
   def destroy
-    puts 'Like destroy triggered'
-    @like = current_user.profile.likes.find_by(id: params[:id])
-    puts @like.inspect
-
-    if @like.present?
-      @like.destroy
-      redirect_back(fallback_location: root_path)
-    else
-      flash[:alert] = "Couldn't find the like to delete."
-      redirect_back(fallback_location: root_path)
-    end
+    @like = current_user.profile.likes.find(params[:id])
+    @like.destroy
+    redirect_back(fallback_location: root_path, notice: 'Unliked the post.')
   end
 
   private
 
   def like_params
-    params.require(:like).permit(:likeable_id, :likeable_type, :profile_id)
+    params.require(:like).permit(:likeable_id, :likeable_type)
   end
 end
