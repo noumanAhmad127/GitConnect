@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create edit update destroy]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :set_profile, only: %i[new create edit update destroy]
   before_action :set_post, only: %i[show edit update destroy]
   before_action :authorize_user!, only: %i[edit update destroy]
 
@@ -10,16 +11,16 @@ class PostsController < ApplicationController
   def show; end
 
   def new
-    @post = current_user.profile.posts.new
+    @post = @profile.posts.new
   end
 
   def create
-    @post = current_user.profile.posts.new(post_params)
+    @post = @profile.posts.new(post_params)
 
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -29,7 +30,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
@@ -39,6 +40,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def set_profile
+    @profile = Profile.find(params[:profile_id])
+  end
 
   def set_post
     @post = Post.find(params[:id])
