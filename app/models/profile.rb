@@ -9,8 +9,7 @@ class Profile < ApplicationRecord
   has_many :followed_relationships, foreign_key: :followed_id, class_name: 'Follow', dependent: :destroy
   has_many :followers, through: :followed_relationships, source: :follower
 
-  has_many :post_tags
-  has_many :tags, through: :post_tags
+  has_many :posts, dependent: :destroy
 
   has_one_attached :profile_pic
 

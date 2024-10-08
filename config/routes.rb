@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
     resources :posts, only: %i[new create edit update destroy]
   end
+  resources :posts, only: %i[index show]
   root to: 'profiles#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
