@@ -9,8 +9,9 @@ Rails.application.routes.draw do
       get 'followers'
       get 'following'
     end
-  end
 
+    resources :posts, only: %i[new create edit update destroy]
+  end
   root to: 'profiles#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
