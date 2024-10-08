@@ -1,0 +1,14 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+<p><strong>Tags:</strong>
+  <%= @post.tags.map(&:name).join(", ") %>
+</p>
+<p>Posted by: <%= @post.profile.name %></p>
+<% if @post.profile == current_user.profile %>
+  <%= link_to 'Edit Post', edit_profile_post_path(@profile, @post) %> |
+  <%= link_to 'Delete Post', profile_post_path(@profile, @post) , data: {
+    turbo_method: :delete,
+    turbo_confirm: 'Are you sure?' 
+    } %>
+<% end %>
+<%= link_to 'Back to Posts', posts_path %>
