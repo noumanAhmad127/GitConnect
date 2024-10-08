@@ -4,9 +4,11 @@
   <%= @post.tags.map(&:name).join(", ") %>
 </p>
 <p>Posted by: <%= @post.profile.name %></p>
-<%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post) %> |
-<%= link_to 'Delete Post', profile_post_path(current_user.profile, @post) , data: {
+<% if user_signed_in?%>
+  <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post) %> |
+  <%= link_to 'Delete Post', profile_post_path(current_user.profile, @post) , data: {
     turbo_method: :delete,
     turbo_confirm: 'Are you sure?' 
     } %>
+<% end%>
 <%= link_to 'Back to Posts', posts_path %>
