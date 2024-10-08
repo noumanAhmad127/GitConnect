@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
-    @posts = Post.all
+    @posts = params[:tag] ? Post.tagged_with(params[:tag]) : Post.all
   end
 
   def show; end
@@ -50,7 +50,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, tag_ids: [])
+    params.require(:post).permit(:title, :content, :tag_list, :tag, { tag_ids: [] }, :tag_ids)
   end
 
   def authorize_user!

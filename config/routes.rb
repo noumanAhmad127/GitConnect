@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   end
   resources :posts, only: %i[index show]
   root to: 'profiles#index'
+
+  get 'tags/:tag', to: 'posts#index', as: :tag
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

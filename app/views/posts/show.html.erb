@@ -1,8 +1,6 @@
 <h1><%= @post.title %></h1>
 <p><%= markdown(@post.content) %></p>
-<p><strong>Tags:</strong>
-  <%= @post.tags.map(&:name).join(", ") %>
-</p>
+<p><small>Tags: <%= raw @post.tags.map(&:name).map { |t| link_to "##{t}", tag_path(t) }.join(', ') %></small></p>
 <p>Posted by: <%= @post.profile.name %></p>
 <% if user_signed_in?%>
   <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post) %> |

@@ -3,9 +3,7 @@
   <div class="post">
     <h2><%= link_to post.title, post_path(post) %></h2>
     <p><%= markdown(post.content) %></p>
-    <p><strong>Tags:</strong>
-      <%= post.tags.map(&:name).join(", ") %>
-    </p>
+    <p><small>Tags: <%= raw post.tags.map(&:name).map { |t| link_to "##{t}", tag_path(t) }.join(' ') %></small></p>
     <p>Posted by: <%= link_to post.profile.name, profile_path(post.profile) %></p>
   </div>
   <hr>
