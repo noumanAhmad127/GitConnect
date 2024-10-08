@@ -11,10 +11,10 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: %i[new create edit update destroy] do
-      resource :like, only: %i[create destroy]
+      resources :likes, only: %i[create destroy]
     end
-    resource :like, only: %i[create destroy]
   end
+  # resources :likes, only: %i[create destroy]
   resources :posts, only: %i[index show]
 
   get 'tags/:tag', to: 'posts#index', as: :tag

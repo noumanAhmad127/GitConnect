@@ -1,6 +1,14 @@
 <h1><%= @post.title %></h1>
 <p><%= markdown(@post.content) %></p>
 <p><small>Tags: <%= raw @post.tags.map(&:name).map { |t| link_to "##{t}", tag_path(t) }.join(', ') %></small></p>
+<% if user_signed_in? %>
+  <% like = current_user.profile.likes.find_by(likeable: @post) %>
+  <% if like.nil? %>
+    <%= button_to "Like", profile_post_likes_path(current_user.profile, @post), method: :post, class: "btn btn-success" %>
+  <% else %>
+    <%= button_to "Unlike", profile_post_like_path(current_user.profile, @post, like), method: :delete, class: "btn btn-danger" %>
+  <% end %>
+<% end %>
 <p>Posted by: <%= @post.profile.name %></p>
 <% if user_signed_in?%>
   <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post) %> |

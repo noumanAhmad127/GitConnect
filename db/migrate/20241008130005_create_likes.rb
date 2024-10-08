@@ -5,7 +5,9 @@ class CreateLikes < ActiveRecord::Migration[7.0]
       t.references :likeable, polymorphic: true, null: false
 
       t.timestamps
-      t.index %i[user_id likeable_type likeable_id], unique: true
     end
+
+    add_index :likes, %i[profile_id likeable_id likeable_type], unique: true,
+                                                                name: 'index_likes_on_profile_and_likeable'
   end
 end

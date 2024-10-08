@@ -1,9 +1,10 @@
 class Post < ApplicationRecord
-  has_many :likes, as: :likeable, dependent: :destroy
   belongs_to :profile
 
   has_many :post_tags
   has_many :tags, through: :post_tags
+
+  has_many :likes, as: :likeable, dependent: :destroy
 
   def self.tagged_with(name)
     Tag.find_by!(name:).posts

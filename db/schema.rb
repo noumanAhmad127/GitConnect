@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_08_094743) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_08_130005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_08_094743) do
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["profile_id", "likeable_id", "likeable_type"], name: "index_likes_on_profile_and_likeable", unique: true
+    t.index ["profile_id"], name: "index_likes_on_profile_id"
   end
 
   create_table "post_tags", force: :cascade do |t|
@@ -123,6 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_08_094743) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "likes", "profiles"
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
   add_foreign_key "posts", "profiles"
