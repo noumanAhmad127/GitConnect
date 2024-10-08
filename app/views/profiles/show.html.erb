@@ -1,0 +1,108 @@
+<div class="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+  <!-- Profile Image, Followers, Following, Posts, and Follow/Unfollow -->
+  <div class="flex items-center justify-between px-10">
+    <div class="flex space-x-8">
+      <div class="text-center">
+        <span class="block text-lg font-semibold"><%= @profile.followers.count %></span>
+        <span class="text-gray-600"><%= link_to 'Followers', followers_profile_path(@profile) %></span>
+      </div>
+      <div class="text-center">
+        <span class="block text-lg font-semibold"><%= @profile.followed_profiles.count %></span>
+        <span class="text-gray-600"><%= link_to 'Following', following_profile_path(@profile) %></span>
+      </div>
+      <div class="text-center">
+        <!-- You can add post count here if needed -->
+        <span class="block text-lg font-semibold">45</span>
+        <span class="text-gray-600">Posts</span>
+      </div>
+    </div>
+    <div class="mr-36 text-center relative">
+      <% if @profile.profile_pic.attached? %>
+        <%= image_tag(@profile.profile_pic, class: "rounded-full w-48 h-48 mx-auto mb-4", alt: "Profile Image") %>
+      <% else %>
+        <p class="text-gray-500">No profile picture uploaded.</p>
+      <% end %>
+    </div>
+    <div>
+      <div>
+        <% if user_signed_in? %>
+          <% if current_user.profile.followed_profiles.include?(@profile) %>
+            <%= link_to 'Unfollow', profile_follow_path(@profile), data: { turbo_method: :delete }, class: " bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black" %>
+          <% else %>
+            <%= button_to 'Follow', profile_follow_path(@profile), method: :post, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+          <% end %>
+        <% else %>
+          <%= link_to 'Log in to Follow', new_user_session_path, class: "follow bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="border-t my-6"></div>
+  <div class="text-center">
+    <h2 class="text-2xl font-bold mb-1"><%= @profile.name %></h2>
+    <p class="text-gray-600">
+      <%= @profile.email || 'Not provided' %> <span class="mx-2">·</span>
+      <%= @profile.contact_info || 'Not provided' %>·</span>
+    <%= @profile.city || 'Not provided' %>
+  </p>
+</div>
+<div class="mt-4 text-center">
+  <% @profile.skill_sets.each do |skill| %>
+    <span class="text-gray-700"><%= skill %></span><%= @profile.skill_sets.last != skill ? ',' : '' %>
+  <% end %>
+</div>
+<div class="mt-8">
+  <h3 class="text-lg font-semibold mb-2">About</h3>
+  <p class="text-gray-700"><%= @profile.headline || 'Not provided' %></p>
+</div>
+<div class="mt-8">
+  <h3 class="text-lg font-semibold mb-2">Experience</h3>
+  <% @profile.work_experience.each do |exp| %>
+    <div class="p-4 bg-gray-100 rounded-lg mb-4">
+      <h4 class="text-lg font-bold"><%= exp['position'] || 'Not provided' %></h4>
+      <p class="text-xs text-gray-500"><%= exp['years_of_experience'] || 'Not provided' %></p>
+      <p class="text-sm text-gray-800 font-semibold mt-2"><%= exp['company'] || 'Not provided' %></p>
+      <p class="mt-1 text-gray-700"><%= exp['responsibilities'] || 'Not provided' %></p>
+    </div>
+  <% end %>
+</div>
+<div class="mt-8">
+  <h3 class="text-lg font-semibold mb-2">Education</h3>
+  <% @profile.education.each do |edu| %>
+    <div class="p-4 bg-gray-100 rounded-lg mb-4">
+      <h4 class="text-lg font-bold"><%= edu['institution'] || 'Not provided' %></h4>
+      <p class="text-sm text-gray-600"><%= edu['graduation_date'] || 'Not provided' %></p>
+      <p class="mt-1 text-gray-700"><%= edu['degree'] || 'Not provided' %></p>
+    </div>
+  <% end %>
+</div>
+<div class="mt-8">
+  <h3 class="text-lg font-semibold mb-2">Projects</h3>
+  <% if @profile.user == current_user %>
+    <%= link_to 'Add New Project', new_profile_project_path(@profile), class: "bg-blue-500 text-white border border-blue rounded-md px-4 py-2  transition duration-200 hover:bg-white hover:text-blue-400" %>
+  <% end %>
+  <% if @profile.projects.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <% @profile.projects.each do |project| %>
+        <div class="p-4 bg-gray-100 rounded-lg">
+          <h4 class="text-lg font-semibold"><%= project.title %></h4>
+          <p class="text-gray-700"><%= project.description %></p>
+          <% if @profile.user == current_user %>
+            <div class="mt-4">
+              <%= link_to 'Edit', edit_profile_project_path(@profile, project), class: "bg-black text-white border border-black rounded-md px-4 py-2 transition duration-200 hover:bg-white hover:text-black" %>
+              <%= link_to 'Delete', profile_project_path(@profile, project), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-red-500 text-white border border-red-500  rounded-md px-4 py-2  transition duration-200 hover:bg-white hover:text-red-500" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-gray-500">No projects added yet.</p>
+  <% end %>
+</div>
+<% if @profile.user == current_user %>
+  <div class="mt-8 text-center">
+    <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "bg-white text-black border border-black rounded-md px-4 py-2 transition duration-200 hover:bg-black hover:text-white" %>
+  </div>
+<% end %>
+</div>
