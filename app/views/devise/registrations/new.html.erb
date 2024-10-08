@@ -1,16 +1,25 @@
-<div class="flex flex-col gap-3">
-  <h2 class="text-2xl font-bold">Sign up</h2>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
-    <div class="flex flex-col gap-2">
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-      </div>
-      <div class="actions py-2 px-4 bg-red-600 text-white w-fit">
-        <%= f.submit "Sign up" %>
-      </div>
+<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+  <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
+    GitConnect
+  </a>
+  <div class="w-full bg-white rounded-lg shadow-xl md:mt-0 sm:max-w-md xl:p-0 ">
+    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+        Create Account
+      </h1>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="space-y-4 md:space-y-6">
+          <div class="field">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-white border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500", placeholder: "name@company.com" %>
+          </div>
+          <div class="actions my-2">
+            <%= f.submit "Sign up", class:"w-full text-white bg-black hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-primary-700 focus:ring-primary-800 " %>
+          </div>
+        </div>
+      <% end %>
+      <%= render "devise/shared/links" %>
     </div>
-  <% end %>
-  <%= render "devise/shared/links" %>
+  </div>
 </div>
