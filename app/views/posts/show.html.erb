@@ -1,6 +1,4 @@
-<!-- Post Title Section -->
 <h1 class="text-4xl font-bold mb-2 text-gray-900"><%= @post.title %></h1>
-<!-- Post Metadata (Author and Created At) -->
 <div class="flex items-center justify-between text-sm text-gray-500 mb-6">
   <div class="flex items-center gap-3">
     <img src="<%= url_for(@post.profile.profile_pic) %>" alt="<%= @post.profile.name %>'s profile picture" class="w-10 h-10 rounded-full object-cover">
@@ -10,7 +8,6 @@
     </div>
   </div>
 </div>
-<!-- Tags Section -->
 <div class="post-tags mb-6">
   <% if @post.tags.any? %>
     <div class="flex flex-wrap gap-2">
@@ -20,11 +17,9 @@
     </div>
   <% end %>
 </div>
-<!-- Post Content -->
 <div class="post-content text-gray-800 mb-8 leading-relaxed">
   <p><%= markdown(@post.content) %></p>
 </div>
-<!-- Like Button Section (StackOverflow-like style) -->
 <% if user_signed_in? %>
   <div class="like-section flex items-center gap-4 mb-6">
     <% if @post.likes.exists?(profile: current_user.profile) %>
@@ -52,7 +47,6 @@
     <p class="text-gray-600 text-lg"><%= pluralize(@post.likes.count, 'Like') %></p>
   </button>
 <%end%>
-<!-- Comments Section -->
 <h3 class="text-lg font-semibold mb-4">Comments - <span class="text-normal">(<%= total_comment_count(@post) %>)</span></h3>
 <span></span>
 <% if user_signed_in? %>
@@ -65,7 +59,6 @@
       <%= f.submit "Add Comment", class: "btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
     <% end %>
   </div>
-  <!-- Display Comments -->
   <ul class="comment-list list-none pl-0">
     <%= render @post.comments %>
   </ul>
@@ -74,14 +67,12 @@
     <%= render @post.comments %>
   </ul>
 <%end%>
-<!-- Edit/Delete Post (Visible if user is signed in) -->
 <% if user_signed_in? %>
   <div class="post-actions mt-6 flex gap-4">
     <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post), class: 'btn text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400' %>
     <%= button_to 'Delete Post', profile_post_path(current_user.profile, @post),method: :delete, data: {  confirm: 'Are you sure?' }, class: 'btn bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600' %>
   </div>
 <% end %>
-<!-- Back to Posts Link -->
 <div class="mt-6">
   <%= link_to 'Back to Posts', posts_path, class: 'btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300' %>
 </div>

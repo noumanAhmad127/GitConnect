@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
-    # Filter by tag
     @pagy, @posts = params[:query].present? ? pagy(Post.search_post(params[:query])) : pagy(Post.all)
 
     @pagy, @posts = pagy(@posts.by_tag(params[:tag])) if params[:tag].present?

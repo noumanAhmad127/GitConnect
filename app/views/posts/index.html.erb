@@ -19,7 +19,6 @@
   </div>
   <% @posts.each do |post| %>
     <div class="post-card bg-white rounded-lg shadow-lg p-4 flex flex-col gap-4 my-4 border border-gray-200">
-      <!-- Top Section: Profile Image and Name -->
       <div class="flex items-center gap-4">
         <img src="<%= url_for(post.profile.profile_pic) %>" 
              alt="<%= post.profile.name %>'s profile picture" 
@@ -28,7 +27,6 @@
           <%= link_to post.profile.name, profile_path(post.profile), class: "hover:underline" %>
         </p>
       </div>
-      <!-- Middle Section: Post Title and Content -->
       <div class="flex flex-col">
         <a href="<%= post_path(post) %>" class="post-title text-xl font-semibold text-gray-800 hover:text-blue-600">
           <%= post.title %>

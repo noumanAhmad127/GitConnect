@@ -24,9 +24,7 @@ class Post < ApplicationRecord
 
   scope :by_tag, ->(tag) { joins(:tags).where(tags: { name: tag }) if tag.present? }
 
-  # Scope to filter posts by popularity (most liked)
   scope :by_popularity, -> { left_joins(:likes).group(:id).order('COUNT(likes.id) DESC') }
 
-  # Scope to filter posts by recency
   scope :by_recency, -> { order(created_at: :desc) }
 end

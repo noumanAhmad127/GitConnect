@@ -1,8 +1,6 @@
 <li class="comment-item mb-4 border-l pl-4">
-  <!-- Comment Body -->
   <p class="text-gray-700"><%= comment.body %></p>
   <small class="text-gray-500">Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
-  <!-- Reply Form -->
   <% if user_signed_in? %>
     <div class="reply-form mt-4">
       <%= form_for [@post, comment, Comment.new], html: { class: 'reply-form' } do |f| %>
@@ -13,7 +11,6 @@
       <% end %>
     </div>
   <% end %>
-  <!-- Nested Comments -->
   <% if comment.comments.any? %>
     <ul class="nested-comments list-none pl-6 mt-4">
       <%= render comment.comments %>
