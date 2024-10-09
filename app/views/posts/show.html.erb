@@ -1,30 +1,76 @@
-<h1><%= @post.title %></h1>
-<p><%= markdown(@post.content) %></p>
-<p><small>Tags: <%= raw @post.tags.map(&:name).map { |t| link_to "##{t}", tag_path(t) }.join(', ') %></small></p>
-<% if user_signed_in? %>
-  <% if @post.likes.exists?(profile: current_user.profile) %>
-    <%= button_to 'Unlike', post_like_path(@post, @post.likes.find_by(profile: current_user.profile)), method: :delete, class: 'btn btn-warning' %>
-  <% else %>
-    <%= button_to 'Like', post_likes_path(@post), method: :post, class: 'btn btn-primary' %>
+<!-- Post Title Section -->
+<h1 class="text-4xl font-bold mb-2 text-gray-900"><%= @post.title %></h1>
+<!-- Post Metadata (Author and Created At) -->
+<div class="flex items-center justify-between text-sm text-gray-500 mb-6">
+  <div class="flex items-center gap-3">
+    <img src="<%= url_for(@post.profile.profile_pic) %>" alt="<%= @post.profile.name %>'s profile picture" class="w-10 h-10 rounded-full object-cover">
+    <div>
+      <p class="font-semibold text-gray-800"><%= @post.profile.name %></p>
+      <p class="text-gray-500"><%= @post.created_at.strftime("%d %B, %Y") %></p>
+    </div>
+  </div>
+</div>
+<!-- Tags Section -->
+<div class="post-tags mb-6">
+  <% if @post.tags.any? %>
+    <div class="flex flex-wrap gap-2">
+      <% @post.tags.each do |tag| %>
+        <%= link_to "##{tag.name}", tag_path(tag), class: 'inline-block bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full' %>
+      <% end %>
+    </div>
   <% end %>
-  <p><%= pluralize(@post.likes.count, 'Like') %></p>
+</div>
+<!-- Post Content -->
+<div class="post-content text-gray-800 mb-8 leading-relaxed">
+  <p><%= markdown(@post.content) %></p>
+</div>
+<!-- Like Button Section (StackOverflow-like style) -->
+<% if user_signed_in? %>
+  <div class="like-section flex items-center gap-4 mb-6">
+    <% if @post.likes.exists?(profile: current_user.profile) %>
+      <%= button_to post_like_path(@post, @post.likes.find_by(profile: current_user.profile)), method: :delete, class: 'flex flex-col items-center justify-center p-3 rounded-lg bg-red-100 hover:bg-red-200' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 9V5a3 3 0 00-3-3L5 6v13h10l4-6V9h-5z" />
+        </svg>
+        <p class="text-red-600 text-sm">Unlike</p>
+      <% end %>
+    <% else %>
+      <%= button_to post_likes_path(@post), method: :post, class: 'flex flex-col items-center justify-center p-3 rounded-lg bg-green-100 hover:bg-green-200' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 9V5a3 3 0 00-3-3L5 6v13h10l4-6V9h-5z" />
+        </svg>
+        <p class="text-green-600 text-sm">Like</p>
+      <% end %>
+    <% end %>
+    <p class="text-gray-600 text-lg"><%= pluralize(@post.likes.count, 'Like') %></p>
+  </div>
 <% end %>
-<p>Posted by: <%= @post.profile.name %></p>
+<!-- Comments Section -->
 <% if user_signed_in? %>
-  <h3>Comments</h3>
-  <%= form_for [@post, Comment.new] do |f| %>
-    <%= f.text_area :body, placeholder: "Add a comment" %><br/>
-    <%= f.submit "Add Comment" %>
-  <% end %>
-  <ul>
+  <h3 class="text-xl font-semibold mb-4">Comments - <span class="text-normal">(<%= total_comment_count(@post) %>)</span></h3>
+  <span></span>
+  <!-- Comment Form -->
+  <div class="comment-form mb-6">
+    <%= form_for [@post, Comment.new], html: { class: 'comment-form' } do |f| %>
+      <div class="mb-4">
+        <%= f.text_area :body, placeholder: "Add a comment", class: "w-full p-3 border rounded-lg focus:ring focus:ring-blue-300" %><br/>
+      </div>
+      <%= f.submit "Add Comment", class: "btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
+    <% end %>
+  </div>
+  <!-- Display Comments -->
+  <ul class="comment-list list-none pl-0">
     <%= render @post.comments %>
   </ul>
-<%end%>
-<% if user_signed_in?%>
-  <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post) %> |
-  <%= link_to 'Delete Post', profile_post_path(current_user.profile, @post) , data: {
-    turbo_method: :delete,
-    turbo_confirm: 'Are you sure?' 
-    } %>
-<% end%>
-<%= link_to 'Back to Posts', posts_path %>
+<% end %>
+<!-- Edit/Delete Post (Visible if user is signed in) -->
+<% if user_signed_in? %>
+  <div class="post-actions mt-6 flex gap-4">
+    <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post), class: 'btn text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400' %>
+    <%= link_to 'Delete Post', profile_post_path(current_user.profile, @post), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600' %>
+  </div>
+<% end %>
+<!-- Back to Posts Link -->
+<div class="mt-6">
+  <%= link_to 'Back to Posts', posts_path, class: 'btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300' %>
+</div>

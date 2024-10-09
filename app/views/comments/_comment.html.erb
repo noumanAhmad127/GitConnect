@@ -1,13 +1,22 @@
-<li>
-  <%= comment.body %> -
-  <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
-  <%= form_for [@post, comment, Comment.new] do |f| %>
-    <%= f.text_area :body, placeholder: "Add a Reply" %><br/>
-    <%= f.submit "Reply" %>
+<li class="comment-item mb-4 border-l pl-4">
+  <!-- Comment Body -->
+  <p class="text-gray-700"><%= comment.body %></p>
+  <small class="text-gray-500">Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
+  <!-- Reply Form -->
+  <% if user_signed_in? %>
+    <div class="reply-form mt-4">
+      <%= form_for [@post, comment, Comment.new], html: { class: 'reply-form' } do |f| %>
+        <div class="mb-2">
+          <%= f.text_area :body, placeholder: "Add a reply", class: "w-full p-2 border rounded" %>
+        </div>
+        <%= f.submit "Reply", class: "btn btn-secondary text-xs text-gray-400" %>
+      <% end %>
+    </div>
   <% end %>
-  <ul>
-    <li>
+  <!-- Nested Comments -->
+  <% if comment.comments.any? %>
+    <ul class="nested-comments list-none pl-6 mt-4">
       <%= render comment.comments %>
-    </li>
-  </ul>
+    </ul>
+  <% end %>
 </li>
