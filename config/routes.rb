@@ -10,7 +10,11 @@ Rails.application.routes.draw do
       get 'following'
     end
 
-    resources :posts, only: %i[new create edit update destroy]
+    resources :posts, only: %i[new create edit update destroy] do
+      resources :comments, only: [:create] do
+        resources :comments, as: 'replies', only: [:create]
+      end
+    end
   end
   # resources :likes, only: %i[create destroy]
   resources :posts, only: %i[index show] do

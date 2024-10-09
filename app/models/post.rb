@@ -6,6 +6,8 @@ class Post < ApplicationRecord
 
   has_many :likes, as: :likeable, dependent: :destroy
 
+  has_many :comments, dependent: :destroy
+
   def self.tagged_with(name)
     Tag.find_by!(name:).posts
   end
