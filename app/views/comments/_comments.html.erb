@@ -1,0 +1,9 @@
+<h3>Comments</h3>
+<% post.comments.each do |comment| %>
+  <div class="comment">
+    <p><strong><%= comment.profile.email %>:</strong> <%= comment.body %></p>
+    <%= render 'comments/replies', comment: comment %>
+    <%= link_to 'Reply', new_post_comment_path(post, parent_id: comment.id) %>
+    <%= link_to 'Delete', [post, comment], method: :delete, data: { confirm: 'Are you sure?' } %>
+  </div>
+<% end %>
