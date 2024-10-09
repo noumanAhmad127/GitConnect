@@ -56,6 +56,7 @@ gem 'dotenv-rails'
 gem 'coderay'
 gem 'redcarpet'
 gem 'cocoon'
+gem 'pagy'
 
 
 group :development, :test do

@@ -6,17 +6,16 @@ class PostsController < ApplicationController
 
   def index
     # Filter by tag
-    @posts = Post.all
-    @posts = @posts.by_tag(params[:tag]) if params[:tag].present?
+    @pagy, @posts = params[:query].present? ? pagy(Post.search_post(params[:query])) : pagy(Post.all)
 
-    # Apply filters based on filter_type
+    @pagy, @posts = pagy(@posts.by_tag(params[:tag])) if params[:tag].present?
     return unless params[:filter_type].present?
 
     case params[:filter_type]
     when 'recency'
-      @posts = @posts.by_recency
+      @pagy, @posts = pagy(@posts.by_recency)
     when 'popularity'
-      @posts = @posts.by_popularity
+      @pagy, @posts = pagy(@posts.by_popularity)
     end
   end
 
