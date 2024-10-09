@@ -57,6 +57,10 @@ class ProfilesController < ApplicationController
     @following = @profile.followed_profiles
   end
 
+  def posts
+    @user_posts = current_user.profile.posts
+  end
+
   private
 
   def profile_params

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       get 'followers'
       get 'following'
+      get 'posts', to: 'profiles#posts'
     end
 
     resources :posts, only: %i[new create edit update destroy]

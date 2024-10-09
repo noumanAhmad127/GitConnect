@@ -39,6 +39,7 @@ class PostsController < ApplicationController
     redirect_to posts_url, notice: 'Post was successfully deleted.'
   end
 
+
   private
 
   def set_profile
