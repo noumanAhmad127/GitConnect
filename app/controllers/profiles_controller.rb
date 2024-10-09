@@ -58,7 +58,8 @@ class ProfilesController < ApplicationController
   end
 
   def posts
-    @user_posts = current_user.profile.posts
+    @profile = Profile.find(params[:id])
+    @user_posts = @profile.posts
   end
 
   private
