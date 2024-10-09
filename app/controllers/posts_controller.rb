@@ -5,7 +5,19 @@ class PostsController < ApplicationController
   before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
-    @posts = params[:tag] ? Post.tagged_with(params[:tag]) : Post.all
+    # Filter by tag
+    @posts = Post.all
+    @posts = @posts.by_tag(params[:tag]) if params[:tag].present?
+
+    # Apply filters based on filter_type
+    return unless params[:filter_type].present?
+
+    case params[:filter_type]
+    when 'recency'
+      @posts = @posts.by_recency
+    when 'popularity'
+      @posts = @posts.by_popularity
+    end
   end
 
   def show; end
@@ -36,9 +48,8 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_url, notice: 'Post was successfully deleted.'
+    redirect_to @post, notice: 'Post was successfully deleted.'
   end
-
 
   private
 
