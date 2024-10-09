@@ -55,6 +55,8 @@ gem 'dotenv-rails'
 
 gem 'coderay'
 gem 'redcarpet'
+gem 'cocoon'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

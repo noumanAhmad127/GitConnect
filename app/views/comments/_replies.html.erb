@@ -1,8 +1,0 @@
-<% if comment.replies.any? %>
-  <div class="replies">
-    <% comment.replies.each do |reply| %>
-      <p><strong><%= reply.profile.email %>:</strong> <%= reply.body %></p>
-      <%= link_to 'Delete', [comment.post, reply], method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
-  </div>
-<% end %>

@@ -10,8 +10,16 @@
   <p><%= pluralize(@post.likes.count, 'Like') %></p>
 <% end %>
 <p>Posted by: <%= @post.profile.name %></p>
-<%= render 'comments/form', post: @post %>
-<%= render 'comments/comments', post: @post %>
+<% if user_signed_in? %>
+  <h3>Comments</h3>
+  <%= form_for [@post, Comment.new] do |f| %>
+    <%= f.text_area :body, placeholder: "Add a comment" %><br/>
+    <%= f.submit "Add Comment" %>
+  <% end %>
+  <ul>
+    <%= render @post.comments %>
+  </ul>
+<%end%>
 <% if user_signed_in?%>
   <%= link_to 'Edit Post', edit_profile_post_path(current_user.profile, @post) %> |
   <%= link_to 'Delete Post', profile_post_path(current_user.profile, @post) , data: {
