@@ -3,14 +3,15 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: %i[show edit update]
 
   def index
-    @profiles = Profile.all
+    @pagy, @profiles = params[:query].present? ? pagy(Profile.search_profile(params[:query])) : pagy(Profile.all)
 
-    @profiles = @profiles.with_skill_set(params[:skill_set]) if params[:skill_set].present?
-    @profiles = @profiles.with_location(params[:location]) if params[:location].present?
+    @pagy, @profiles = pagy(@profiles.with_skill_set(params[:skill_set])) if params[:skill_set].present?
+
+    @pagy, @profiles = pagy(@profiles.with_location(params[:location])) if params[:location].present?
 
     return unless params[:years_of_experience].present?
 
-    @profiles = @profiles.with_years_of_experience(params[:years_of_experience].to_i)
+    @pagy, @profiles = pagy(@profiles.with_years_of_experience(params[:years_of_experience].to_i))
   end
 
   def show
@@ -55,6 +56,11 @@ class ProfilesController < ApplicationController
   def following
     @profile = Profile.find(params[:id])
     @following = @profile.followed_profiles
+  end
+
+  def posts
+    @profile = Profile.find(params[:id])
+    @user_posts = @profile.posts
   end
 
   private

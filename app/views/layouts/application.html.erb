@@ -13,8 +13,8 @@
     <header class="w-full py-4 shadow-md">
       <div class="container mx-auto flex justify-between items-center px-10 relative">
         <div class="flex items-center space-x-8">
-          <%= link_to "All Developers", root_path, class: "hover:underline" %>
-          <%= link_to "All Posts", root_path, class: "hover:underline" %>
+          <%= link_to " Developers", root_path, class: "hover:underline" %>
+          <%= link_to " Posts",posts_path, class: "hover:underline" %>
         </div>
         <div class=" left-1/2 transform ">
           <div class="text-2xl font-bold text-black ">
@@ -24,15 +24,13 @@
         </div>
         <div class="flex items-center space-x-5">
           <% if user_signed_in? %>
-            <%= link_to "Create Post", root_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            <%= link_to "Create Post", new_profile_post_path(current_user.profile), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
             <%= link_to profile_path(current_user.profile), class: "" do %>
               <img src="<%= url_for(current_user.profile.profile_pic) %>" alt="Profile Picture" class="object-cover w-10 h-10 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500">
             <% end %>
-            <%= link_to "Log Out", destroy_user_session_path, data:{
-                turbo_method: :delete
-              }, class: "hover:underline" %>
+            <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "hover:underline" %>
           <% else %>
-            <%= link_to "Create Post", root_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            <%= link_to "Create Post", new_user_session_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
             <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

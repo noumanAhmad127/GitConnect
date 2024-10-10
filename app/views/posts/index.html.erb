@@ -1,0 +1,65 @@
+<section class="posts-container max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6 text-center">All Posts</h1>
+  <div class=" my-4">
+    <%= form_with url: posts_path, method: :get, local: true do |form| %>
+      <div class="flex flex-col items-center gap-3">
+        <div  class="flex flex-row gap-2">
+          <div class="form-group">
+            <%= form.label :tag, 'Filter by Tag' %>
+            <%= form.select :tag, options_for_select([['Select Tag', '']] + Tag.pluck(:name).map { |name| [name, name] }, params[:tag]), class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= form.label :filter_type, 'Filter by' %>
+            <%= form.select :filter_type, options_for_select([['Select Filter', ''], ['Recency', 'recency'], ['Popularity', 'popularity']]), class: 'form-control' %>
+          </div>
+        </div>
+        <div class="actions bg-black text-white border border-black rounded-md px-4 py-2 font-bold ml-4 transition duration-200 hover:bg-transparent hover:text-black"><%= form.submit 'Apply Filters', class: 'btn btn-primary' %></div>
+      </div>
+    <% end %>
+  </div>
+  <% @posts.each do |post| %>
+    <div class="post-card bg-white rounded-lg shadow-lg p-4 flex flex-col gap-4 my-4 border border-gray-200">
+      <div class="flex items-center gap-4">
+        <img src="<%= url_for(post.profile.profile_pic) %>" 
+             alt="<%= post.profile.name %>'s profile picture" 
+             class="w-10 h-10 rounded-full object-cover">
+        <p class="text-gray-800 font-semibold text-lg">
+          <%= link_to post.profile.name, profile_path(post.profile), class: "hover:underline" %>
+        </p>
+      </div>
+      <div class="flex flex-col">
+        <a href="<%= post_path(post) %>" class="post-title text-xl font-semibold text-gray-800 hover:text-blue-600">
+          <%= post.title %>
+        </a>
+        <div class="post-content text-gray-700 mt-2">
+          <%= markdown(post.content) %>
+        </div>
+      </div>
+      <!-- Bottom Section: Post Creation Time -->
+      <div class="post-info text-gray-600 mt-4 flex items-center text-xs">
+        <span class="material-icons text-xs">created_at:</span>
+        <p><%= post.created_at.strftime("%d %b %Y") %></p>
+      </div>
+      <hr class=" border-gray-200" />
+      <div class="flex gap-4 items-center text-gray-600">
+        <p class="flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 9v6m4-3V6m-5 3v6" />
+          </svg>
+          <%= pluralize(post.likes.count, 'Like') %>
+        </p>
+        <p class="flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 6V3a3 3 0 00-3-3H6a3 3 0 00-3 3v9a7 7 0 007 7" />
+          </svg>
+          <%= pluralize(post.comments.count, 'Comment') %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+  <div class="pag-bar mt-5 pt-5 flex justify-center">
+    <nav class="flex space-x-2">
+      <%== pagy_nav(@pagy, link_extra: 'class="px-3 py-1 border rounded-md text-gray-700 hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out"') %>
+    </nav>
+  </div>
+</section>
