@@ -77,9 +77,7 @@
           <div class="links flex">
             <% if user_signed_in? %>
               <% if current_user.profile.followed_profiles.include?(profile) %>
-                <%= link_to 'Followed', profile_follow_path(profile), data:{
-                      turbo_method: :delete
-                    }, class: "bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
+                <%= button_to 'Followed', profile_follow_path(profile), method: :delete, class: "bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
               <% else %>
                 <%= button_to 'Follow', profile_follow_path(profile), method: :post, class: "bg-transparent text-black border border-black rounded-md px-4 py-2 font-bold transition duration-200 hover:bg-black hover:text-white" %>
               <% end %>
