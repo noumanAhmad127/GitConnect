@@ -5,7 +5,6 @@ class Profile < ApplicationRecord
 
   has_many :follower_relationships, foreign_key: :follower_id, class_name: 'Follow', dependent: :destroy
   has_many :followed_profiles, through: :follower_relationships, source: :followed
-
   has_many :followed_relationships, foreign_key: :followed_id, class_name: 'Follow', dependent: :destroy
   has_many :followers, through: :followed_relationships, source: :follower
 
