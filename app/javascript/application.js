@@ -2,7 +2,12 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 // app/javascript/packs/application.js
-import "cocoon";
-import "./add_jquery"
-//= require jquery
-//= require jquery_ujs
+import "./add_jquery";
+import "jquery"; // Importing jQuery from the Import Map
+import "cocoon"; // Importing Cocoon from the Import Map
+
+import Rails from "@rails/ujs";
+Rails.start();
+
+// import Rails from "@rails/ujs";
+// Rails.start();
