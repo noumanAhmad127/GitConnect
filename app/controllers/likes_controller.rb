@@ -3,10 +3,15 @@ class LikesController < ApplicationController
   before_action :find_likeable
 
   def create
-    @likeable.likes.create(profile: current_user.profile)
+    byebug
+    @like = @likeable.likes.create(profile: current_user.profile)
+
     respond_to do |format|
-      format.html { redirect_to @likeable }
-      format.js
+      format.html { redirect_back fallback_location: root_path } # Use fallback_location as a safety
+      format.js do
+        render json: { id: @likeable.id, html: render_to_string(partial: 'likes/like_button', locals: { post: @likeable }),
+                       like_count: @likeable.likes.count }
+      end
     end
   end
 

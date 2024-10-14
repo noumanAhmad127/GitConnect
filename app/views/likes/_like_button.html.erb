@@ -1,7 +1,8 @@
 <% if user_signed_in? && post.likes.exists?(profile: current_user.profile) %>
   <%= button_to post_like_path(post, post.likes.find_by(profile: current_user.profile)), 
               method: :delete, 
-              data: { remote: true,turbo: false }, 
+              
+              data:{remote: true,turbo: false }, 
                id: button_id, 
               class: 'flex flex-col items-center justify-center p-3 rounded-lg bg-red-100 hover:bg-red-200' do %>
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -10,14 +11,12 @@
     <p class="text-red-600 text-sm">Unlike</p>
   <% end %>
 <% else %>
-  <%= button_to post_likes_path(post), 
-                method: :post, 
-                data: { remote: true,turbo: false }, 
-                 id: button_id, 
-                class: 'flex flex-col items-center justify-center p-3 rounded-lg bg-green-100 hover:bg-green-200' do %>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M14 9V5a3 3 0 00-3-3L5 6v13h10l4-6V9h-5z" />
-    </svg>
-    <p class="text-green-600 text-sm">Like</p>
+  <%= form_with(url: post_likes_path(post), method: :post, remote: true, id: "like-btn-#{post.id}", html: { class: 'like-button-form' }) do %>
+    <button type="submit" class="flex flex-col items-center justify-center p-3 rounded-lg bg-green-100 hover:bg-green-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M14 9V5a3 3 0 00-3-3L5 6v13h10l4-6V9h-5z" />
+      </svg>
+      <p class="text-green-600 text-sm">Like</p>
+    </button>
   <% end %>
 <% end %>
