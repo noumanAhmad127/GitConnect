@@ -1,0 +1,3 @@
+// Update the like button and like count without reloading the page
+$("#like-btn-<%= @likeable.id %>").html("<%= escape_javascript(render 'likes/like_button', post: @likeable) %>");
+$("#like-count-<%= @likeable.id %>").text("<%= pluralize(@likeable.likes.count, 'Like') %>");

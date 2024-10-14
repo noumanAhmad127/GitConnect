@@ -1,0 +1,11 @@
+{
+  "name": "GitConnect",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/noumanAhmad127/GitConnect.git",
+  "author": "Nouman Ahmad <ahmadnouman183@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.7.1"
+  }
+}

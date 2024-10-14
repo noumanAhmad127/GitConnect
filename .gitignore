@@ -39,3 +39,4 @@ test/*
 .env
 log/
 
+/node_modules/
