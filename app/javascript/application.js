@@ -4,3 +4,5 @@ import "controllers";
 // app/javascript/packs/application.js
 import "cocoon";
 import "./add_jquery"
+//= require jquery
+//= require jquery_ujs

@@ -17,6 +17,8 @@
     </div>
   <% end %>
 </div>
+
+
 <div class="post-content text-gray-800 mb-8 leading-relaxed">
   <p><%= markdown(@post.content) %></p>
 </div>
@@ -24,6 +26,8 @@
   <%= render 'likes/like_button', post: @post %>
   <p id="like-count-<%= @post.id %>" class="text-gray-600 text-lg"><%= pluralize(@post.likes.count, 'Like') %></p>
 </div>
+
+
 <h3 class="text-lg font-semibold mb-4">Comments - <span class="text-normal">(<%= total_comment_count(@post) %>)</span></h3>
 <span></span>
 <% if user_signed_in? %>

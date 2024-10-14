@@ -5,7 +5,7 @@ class LikesController < ApplicationController
   def create
     @likeable.likes.create(profile: current_user.profile)
     respond_to do |format|
-      format.html { redirect_back fallback_location: root_path }
+      format.html { redirect_to @likeable }
       format.js
     end
   end
