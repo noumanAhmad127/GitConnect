@@ -3,7 +3,6 @@ class LikesController < ApplicationController
   before_action :find_likeable
 
   def create
-    byebug
     @like = @likeable.likes.create(profile: current_user.profile)
 
     respond_to do |format|
